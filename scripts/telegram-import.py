@@ -97,11 +97,21 @@ def import_photo(api, message, root):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(data)
     alt = caption or (album.capitalize() + ' photograph')
-    figure = '<figure><img src="' + image_url + '" alt="' + html.escape(alt, quote=True) + '" loading="lazy">'
+    figure = [
+        '<figure>',
+        '  <img src="' + image_url + '" alt="' + html.escape(alt, quote=True) + '" loading="lazy">',
+    ]
     if caption:
-        figure += '<figcaption>' + html.escape(caption) + '</figcaption>'
-    figure += '</figure>'
-    page.write_text(markup.replace('</article>', figure + '</article>', 1))
+        figure.append('  <figcaption>' + html.escape(caption) + '</figcaption>')
+    figure.append('</figure>')
+    closing = re.search(r'(?m)^([ \t]*)</article>', markup)
+    if closing:
+        indent = closing[1] + '  '
+        block = '\n'.join(indent + line for line in figure) + '\n'
+        markup = markup[:closing.start()] + block + markup[closing.start():]
+    else:
+        markup = markup.replace('</article>', '\n'.join(figure) + '</article>', 1)
+    page.write_text(markup)
     return 'Added to ' + album + ': https://laptos.fun/albums/' + album + '\nThe site deployment may take a few minutes.'
 
 def process_updates(api, updates, owner_id, root, offset, groups=None):

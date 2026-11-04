@@ -1,0 +1,15 @@
+{
+  "name": "laptos-website",
+  "private": true,
+  "scripts": {
+    "serve": "python3 -m http.server 8080 --bind 127.0.0.1",
+    "format": "prettier --write '*.html' 'albums/*.html' 'assets/css/*.css' 'assets/js/*.js' 'tests/browser/*.js' playwright.config.js",
+    "format:check": "prettier --check '*.html' 'albums/*.html' 'assets/css/*.css' 'assets/js/*.js' 'tests/browser/*.js' playwright.config.js",
+    "test": "python3 -m unittest discover -s tests -v",
+    "test:browser": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "prettier": "3.9.10"
+  }
+}

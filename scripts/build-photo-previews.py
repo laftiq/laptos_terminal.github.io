@@ -37,8 +37,23 @@ def build(root=ROOT):
                 width, height = image.size
             preview = '../' + destination.relative_to(root).as_posix()
             preview_by_original[source] = destination.relative_to(root).as_posix()
-            tag = re.sub(r'\s+(?:src|data-full|width|height|decoding)="[^"]*"', '', tag)
-            return tag.replace('<img', '<img src="' + preview + '" data-full="' + html.escape(original, quote=True) + '" width="' + str(width) + '" height="' + str(height) + '" decoding="async"', 1)
+            attributes = {
+                'src': preview,
+                'data-full': original,
+                'width': str(width),
+                'height': str(height),
+                'decoding': 'async',
+            }
+            # Update values in place, keeping the page's indentation and attributes.
+            for name, value in attributes.items():
+                attribute = name + '="' + html.escape(value, quote=True) + '"'
+                pattern = r'(?<![\w-])' + name + r'="[^"]*"'
+                if re.search(pattern, tag):
+                    tag = re.sub(pattern, lambda _: attribute, tag, count=1)
+                else:
+                    tag = tag.replace('<img', '<img ' + attribute, 1)
+            return tag
+
         # Album pages contain only photo images; favicons are links.
         text = re.sub(r'<img\b[^>]*>', convert, text)
         fingerprint = hashlib.sha256('\n'.join(fingerprints).encode()).hexdigest()
@@ -51,7 +66,7 @@ def build(root=ROOT):
     for album, meta in metadata.items():
         pattern = r'(<a\b[^>]*href="albums/' + re.escape(album) + r'\.html"[^>]*>)(.*?)(</a>)'
         def card(match):
-            content = re.sub(r'<span class="album-meta">.*?</span>', '', match.group(2), flags=re.S)
+            content = match.group(2)
             image = re.search(r'<img\b[^>]*src="([^"]+)"[^>]*>', content)
             if image:
                 source = (root / html.unescape(image.group(1))).resolve()
@@ -59,7 +74,13 @@ def build(root=ROOT):
                 if source in preview_by_original:
                     content = content.replace('src="' + image.group(1) + '"', 'src="' + preview_by_original[source] + '"', 1)
             count = meta['count']
-            content += '<span class="album-meta">' + str(count) + (' photo' if count == 1 else ' photos') + ' · Updated ' + meta['updated'] + '</span>'
+            label = str(count) + (' photo' if count == 1 else ' photos') + ' · Updated ' + meta['updated']
+            meta_pattern = r'(<span class="album-meta"\s*>\s*).*?(\s*</span\s*>)'
+            if re.search(meta_pattern, content, flags=re.S):
+                content = re.sub(meta_pattern, lambda item: item[1] + label + item[2], content, flags=re.S)
+            else:
+                content = content.rstrip() + '<span class="album-meta">' + label + '</span>'
+
             return match.group(1) + content + match.group(3)
         text = re.sub(pattern, card, text, flags=re.S)
     index.write_text(text)

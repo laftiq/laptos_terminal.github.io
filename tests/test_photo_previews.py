@@ -41,4 +41,24 @@ class PreviewTests(unittest.TestCase):
             self.assertEqual(previews.build(root), metadata)
             self.assertEqual((root / 'albums/street.html').read_text(), album)
 
+    def test_formatted_html_stays_stable_and_metadata_is_replaced(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'albums').mkdir()
+            (root / 'assets').mkdir()
+            Image.new('RGB', (40, 30)).save(root / 'assets/test.jpg')
+            page = root / 'albums/street.html'
+            page.write_text('<article class="panel album">\n  <figure>\n    <img\n      src="../assets/test.jpg"\n      alt="Keep this caption"\n    >\n  </figure>\n</article>\n')
+            index = root / 'index.html'
+            index.write_text('<a\n  href="albums/street.html"\n>\n  <span class="album-meta">\n    99 photos · Updated old\n  </span>\n</a>\n')
+            previews.build(root)
+            first = (page.read_text(), index.read_text())
+            self.assertIn('\n      src="../assets/previews/', first[0])
+            self.assertIn('alt="Keep this caption"', first[0])
+            self.assertEqual(first[1].count('class="album-meta"'), 1)
+            self.assertIn('1 photo · Updated', first[1])
+            self.assertNotIn('99 photos', first[1])
+            previews.build(root)
+            self.assertEqual((page.read_text(), index.read_text()), first)
+
 if __name__ == '__main__': unittest.main()

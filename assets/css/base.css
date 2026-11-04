@@ -1,0 +1,138 @@
+@font-face {
+  font-family: "Laptos Mono";
+  src: url("../fonts/JetBrainsMono-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Laptos Mono";
+  src: url("../fonts/JetBrainsMono-Bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  --bg: #0c0d0f;
+  --panel: #141517;
+  --bar: #222326;
+  --line: #55575b;
+  --text: #d4d0c8;
+  --dim: #929397;
+  --bright: #f0ede7;
+  --font-ui: "Courier New", monospace;
+  --font-art: "Courier New", monospace;
+  --font-body-size: 14px;
+  --font-note-size: 11px;
+  --glow-body: 0 0 6px #e0e0e025;
+  --glow-title: 0 0 7px #ffffff40;
+  --panel-shadow: 0 0 16px #ffffff08, inset 0 0 30px #ffffff03;
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.65 var(--font-ui);
+  text-shadow: var(--glow-body);
+}
+button,
+input,
+textarea {
+  font: inherit;
+}
+button,
+a {
+  color: inherit;
+}
+button {
+  cursor: pointer;
+}
+a {
+  text-decoration: none;
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--bright);
+  outline-offset: 4px;
+}
+p {
+  max-width: 460px;
+  color: var(--dim);
+}
+dd {
+  margin: 0;
+}
+pre {
+  font-family: var(--font-art);
+  font-variant-ligatures: none;
+}
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: var(--panel-shadow);
+}
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 37px;
+  margin: 0;
+  padding: 8px 16px;
+  background: var(--bar);
+  border-bottom: 1px solid #55575b99;
+  color: var(--bright);
+  font: 700 12px/1.6 var(--font-ui);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: var(--glow-title);
+}
+.bar > span {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  text-shadow: inherit;
+}
+
+@media (max-width: 700px) {
+  :root {
+    --font-ui: "Laptos Mono", monospace;
+    --glow-body: none;
+    --glow-title: 0 0 6px #ffffff35;
+  }
+  body {
+    font-variant-ligatures: none;
+  }
+  .panel p,
+  .panel dt,
+  .panel dd,
+  .panel small,
+  .panel a,
+  .panel figcaption {
+    text-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition: none;
+  }
+}
