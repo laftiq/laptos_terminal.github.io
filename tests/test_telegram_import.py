@@ -59,4 +59,34 @@ class ImportTests(unittest.TestCase):
         _, replies = mod.process_updates(self.api, [{'update_id': 1, 'message': message}], None, self.root, 0)
         self.assertIn('42', replies[0]['text'])
 
+    def group_message(self, file_id, caption=''):
+        message = self.message(caption=caption)
+        message['media_group_id'] = 'group-1'
+        message['document']['file_id'] = file_id
+        return message
+    def test_group_one_tag_applies_to_all(self):
+        updates = [{'update_id': 1, 'message': self.group_message('first', '#teriberka Snow')},
+                   {'update_id': 2, 'message': self.group_message('second')}]
+        _, replies = mod.process_updates(self.api, updates, 42, self.root, 0)
+        self.assertEqual(self.api.downloads, 2)
+        self.assertTrue(all('album tag' not in r['text'] for r in replies))
+        self.assertIn('Snow', (self.root / 'albums/teriberka.html').read_text())
+    def test_group_caption_on_later_item(self):
+        updates = [{'update_id': 1, 'message': self.group_message('first')},
+                   {'update_id': 2, 'message': self.group_message('second', '#autumn')}]
+        mod.process_updates(self.api, updates, 42, self.root, 0)
+        self.assertEqual(self.api.downloads, 2)
+        self.assertIn('<figure>', (self.root / 'albums/autumn.html').read_text())
+    def test_group_continues_across_runs(self):
+        groups = {}
+        mod.process_updates(self.api, [{'update_id': 1, 'message': self.group_message('first', '#street')}], 42, self.root, 0, groups)
+        mod.process_updates(self.api, [{'update_id': 2, 'message': self.group_message('second')}], 42, self.root, 2, groups)
+        self.assertEqual(self.api.downloads, 2)
+        self.assertTrue(all(len(key) == 64 for key in groups))
+    def test_conflicting_group_tags_rejected(self):
+        updates = [{'update_id': 1, 'message': self.group_message('first', '#street')},
+                   {'update_id': 2, 'message': self.group_message('second', '#autumn')}]
+        mod.process_updates(self.api, updates, 42, self.root, 0)
+        self.assertEqual(self.api.downloads, 0)
+
 if __name__ == '__main__': unittest.main()

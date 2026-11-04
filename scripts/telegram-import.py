@@ -17,7 +17,7 @@ STATE = ROOT / '.telegram-import-state.json'
 REPLIES = Path(os.environ.get('RUNNER_TEMP', '/tmp')) / 'laptos-telegram-replies.json'
 ALBUMS = ('street', 'autumn', 'teriberka')
 LIMIT = 20 * 1024 * 1024
-HELP = 'Send an image as a FILE, with #street, #autumn or #teriberka in its caption. Other text becomes the photo caption. You can forward files and add a caption. To find your ID: /id. Publication is checked approximately every 15 minutes.'
+HELP = 'Send an image as a FILE, with #street, #autumn or #teriberka in its caption. Other text becomes the photo caption. For grouped files, one album tag in the group caption applies to the whole group. You can forward files and add a caption. To find your ID: /id. Publication is checked approximately every 15 minutes.'
 
 class BotError(Exception):
     pass
@@ -104,8 +104,31 @@ def import_photo(api, message, root):
     page.write_text(markup.replace('</article>', figure + '</article>', 1))
     return 'Added to ' + album + ': https://laptos.fun/albums/' + album + '\nThe site deployment may take a few minutes.'
 
-def process_updates(api, updates, owner_id, root, offset):
+def process_updates(api, updates, owner_id, root, offset, groups=None):
+    if groups is None:
+        groups = {}
     replies = []
+    # Resolve captions before importing so a caption on any item applies to the group.
+    group_captions = {}
+    def group_key(message):
+        raw = str(message.get('chat', {}).get('id')) + ':' + str(message['media_group_id'])
+        return hashlib.sha256(raw.encode()).hexdigest()
+    for update in updates:
+        message = update.get('message') or {}
+        if (update['update_id'] < offset or not message.get('media_group_id')
+                or message.get('chat', {}).get('type') != 'private'
+                or owner_id is None or message.get('from', {}).get('id') != owner_id):
+            continue
+        key = group_key(message)
+        caption = message.get('caption', '')
+        if re.search(r'(?<!\w)#(?:street|autumn|teriberka)\b', caption, re.I):
+            group_captions.setdefault(key, []).append(caption)
+    for key, captions in group_captions.items():
+        albums = {album_caption(caption)[0] for caption in captions}
+        groups[key] = captions[0] if len(albums) == 1 and None not in albums else ''
+    # Keep recent group routing only; never persist file IDs or sender IDs.
+    while len(groups) > 100:
+        groups.pop(next(iter(groups)))
     for update in updates:
         if update['update_id'] < offset:
             continue
@@ -117,6 +140,18 @@ def process_updates(api, updates, owner_id, root, offset):
         if chat.get('type') == 'private' and text == '/id':
             replies.append({'chat_id': chat['id'], 'text': 'Your Telegram user ID: ' + str(sender.get('id'))})
         elif chat.get('type') == 'private' and sender.get('id') == owner_id:
+            if message.get('media_group_id'):
+                key = group_key(message)
+                group_caption = groups.get(key)
+                if group_caption == '':
+                    replies.append({'chat_id': chat['id'], 'text': 'The group has conflicting album tags. Resend it with one album tag.'})
+                    offset = max(offset, update['update_id'] + 1)
+                    continue
+                if group_caption and not album_caption(message.get('caption', ''))[0]:
+                    message = dict(message)
+                    album, common_text = album_caption(group_caption)
+                    own_text = message.get('caption', '').strip()
+                    message['caption'] = '#' + album + ' ' + (own_text or common_text)
             reply = HELP if text in ('/start', '/help') else import_photo(api, message, root)
             replies.append({'chat_id': chat['id'], 'text': reply})
         offset = max(offset, update['update_id'] + 1)
@@ -144,9 +179,10 @@ def main():
     owner_id = int(raw_owner) if raw_owner else None
     state = json.loads(STATE.read_text()) if STATE.exists() else {'offset': 0}
     updates = api.call('getUpdates', offset=state['offset'], limit=100, timeout=0, allowed_updates=['message'])
-    offset, replies = process_updates(api, updates, owner_id, ROOT, state['offset'])
+    groups = state.get('groups', {})
+    offset, replies = process_updates(api, updates, owner_id, ROOT, state['offset'], groups)
     if offset != state['offset']:
-        STATE.write_text(json.dumps({'offset': offset}) + '\n')
+        STATE.write_text(json.dumps({'offset': offset, 'groups': groups}) + '\n')
     REPLIES.write_text(json.dumps(replies))
     print('Processed updates:', len(updates), '| owner configured:', bool(owner_id))
 
