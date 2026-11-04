@@ -1,0 +1,44 @@
+name: Telegram photos
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: telegram-photo-import
+  cancel-in-progress: false
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check importer
+        run: python3 -m unittest discover -s tests -v
+      - name: Import new photographs
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_OWNER_ID: ${{ secrets.TELEGRAM_OWNER_ID }}
+        run: python3 scripts/telegram-import.py
+      - name: Publish imported photographs
+        run: |
+          for path in assets/photos albums .telegram-import-state.json; do
+            if [ -e "$path" ]; then git add -- "$path"; fi
+          done
+          if ! git diff --cached --quiet; then
+            git config user.name 'laptos'
+            git config user.email 'lapto@laptos.fun'
+            git commit -m "Import Telegram photo updates"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Send Telegram confirmations after successful push
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: python3 scripts/telegram-import.py --notify
