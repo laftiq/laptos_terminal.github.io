@@ -1,2156 +1,626 @@
-<!doctype html>
-<!-- ====================================================================
-     VT323 VARIANT of index.html — a fake Linux terminal home screen.
-     The console runs small utility commands inline (help, whoami, ls,
-     clear); the content modules (about / contacts / specs / credits)
-     open their own dedicated page instead of printing inline.
-     Only the webfont <link> + the CSS font variable differ from a "normal"
-     font; the ASCII brand logo keeps its own system monospace.
-     ==================================================================== -->
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="// my bio //"
-    />
-    <!-- browser tab title — EDIT freely -->
-    <title>laftq's place</title>
-    <!-- Основной вариант -->
-    <link rel="icon" href="https://i.ibb.co/gp35SWN/vivaldi-8-G0-JLWm-CEF.png" type="image/png">
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Laptos — terminal / alternate</title><meta content="A personal digital corner. Photography, experiments, and everyday signals." name="description"/><style>
+:root{--bg:#060c08;--panel:#0a140e;--line:#365a3c;--text:#a2cda4;--dim:#638768;--bright:#c4ef9e}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:12px/1.6 'Courier New',monospace}body:after{content:'';position:fixed;inset:0;pointer-events:none;z-index:10;background:repeating-linear-gradient(0deg,transparent,transparent 2px,#0002 3px)}button,input{font:inherit}button,a{color:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--bright);outline-offset:4px}button{background:transparent;border:1px solid var(--line);padding:8px 12px}button:hover{background:#a2cda41a;color:var(--bright)}header,footer{display:flex;justify-content:space-between;gap:20px;text-transform:uppercase;letter-spacing:1.5px;font-size:10px;color:var(--dim)}header{padding:28px 0 18px;border-top:1px solid var(--line)}.shell{max-width:1420px;margin:8px auto 0;padding:0 28px}main{display:grid;grid-template-columns:230px minmax(380px,1fr) 340px;gap:20px;align-items:start}.panel{background:var(--panel);border:1px solid var(--line)}.bar{padding:8px 13px;border-bottom:1px solid var(--line);background:repeating-linear-gradient(0deg,#14251a,#14251a 1px,#102017 2px,#102017 3px);font-size:10px;letter-spacing:1.5px;display:flex;justify-content:space-between;text-transform:uppercase}.pad{padding:26px}.directory{padding:24px 16px}.eyebrow{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim)}nav{margin:28px 0 38px;display:grid;gap:22px}nav button{text-align:left;border:0;padding:0 0 0 16px;position:relative}nav button:before{content:'├';position:absolute;left:0;color:var(--line)}nav small{display:block;color:var(--dim);font-size:10px}nav .active{color:var(--bright)}.footnote{border-top:1px solid var(--line);padding-top:20px;font-size:10px;color:var(--dim)}.stack{display:grid;gap:20px}.hero{min-height:420px;padding:32px}.live:before{content:'';display:inline-block;width:5px;height:5px;background:var(--bright);box-shadow:0 0 10px var(--bright);margin-right:10px}.badge{margin:34px 0 28px 18px;width:185px;text-align:center;color:var(--bright);font-size:18px;font-weight:bold;line-height:1.9}.badge span{display:block;border:1px solid var(--bright);font-size:15px}h1{font-size:28px;font-weight:400;line-height:1.3;margin:0 0 20px}p{color:var(--dim);max-width:460px}.actions{display:flex;gap:10px;margin-top:25px;font-size:10px}.gallery-head{padding:10px 16px;display:flex;justify-content:space-between;color:var(--dim);font-size:9px;border-bottom:1px solid var(--line)}.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:22px 18px}.photo{border:0;padding:0;text-align:left;min-width:0}.art{height:145px;position:relative;overflow:hidden;border:1px solid var(--line);background:linear-gradient(150deg,transparent 37%,#173c2b 38% 55%,transparent 56%),linear-gradient(20deg,#aecb80 0 15%,#376247 16% 45%,#87a66a 46% 69%,#183d2c 70%);image-rendering:pixelated}.art:after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,#0003 0 1px,transparent 1px 3px)}.window{background:linear-gradient(90deg,transparent 26%,#183326 26% 31%,transparent 31% 76%,#173326 76% 81%,transparent 81%),linear-gradient(#9fbb7a 20%,#36553a 20% 72%,#8aa46a 72%)}.train{background:linear-gradient(170deg,transparent 30%,#142b20 31% 69%,transparent 70%),linear-gradient(90deg,#375941 40%,#bdd18d 40% 45%,#416849 45%)}.photo small{display:block;font-size:9px;line-height:1.4;margin-top:9px;color:var(--dim)}.gallery-bottom{padding:0 18px 14px;display:flex;justify-content:space-between;font-size:9px;color:var(--dim)}.radar{width:168px;height:168px;border:1px solid #508458;border-radius:50%;position:relative;margin:12px auto 28px;background:linear-gradient(90deg,transparent 49.7%,#365a3c 50%,transparent 50.5%),linear-gradient(transparent 49.7%,#365a3c 50%,transparent 50.5%),repeating-radial-gradient(circle,transparent 0 26px,#365a3c 27px 28px)}.radar:before{content:'';position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 10deg,transparent 65%,#9bb97755 100%);animation:sweep 8s linear infinite}.radar:after{content:'+';position:absolute;left:112px;top:45px;color:var(--bright);text-shadow:0 0 10px var(--bright)}@keyframes sweep{to{transform:rotate(360deg)}}dl{display:grid;grid-template-columns:1fr auto;gap:14px;font-size:10px;margin:0}dt{color:var(--dim)}dd{margin:0}.terminal{padding:20px;font-size:10px}.log{color:var(--dim);max-height:150px;overflow:auto;white-space:pre-wrap}.hint{color:var(--bright);margin-top:5px}.command{display:flex;align-items:center;gap:9px;margin-top:18px}.command input{width:100%;min-width:0;background:none;border:0;border-bottom:1px solid var(--line);color:var(--bright);padding:5px}.command button{padding:0 5px}.notes{padding:25px}.note{padding:14px 0;border-bottom:1px dashed var(--line)}.note:last-child{border:0}.note small{color:var(--dim)}footer{margin-top:150px;padding:18px 0;border-top:1px solid #203625;font-size:9px}.status{position:fixed;bottom:20px;right:28px;background:var(--bright);color:#18321c;padding:7px 14px;font-size:10px;z-index:11}dialog{background:var(--bg);color:var(--text);border:1px solid var(--line);width:min(650px,90vw);padding:25px}dialog::backdrop{background:#000c}dialog .art{height:350px}dialog button{float:right;margin-bottom:15px}.hidden{display:none}@media(min-width:1500px){.shell{margin-top:24px}}@media(max-width:1100px){main{grid-template-columns:185px minmax(320px,1fr)}.right{grid-column:2;grid-template-columns:1fr 1fr}.hero{padding:28px}.right .pad{padding:18px}.radar{width:130px;height:130px}}@media(max-width:680px){.shell{padding:0 16px}header{font-size:8px}.header-end{display:none}main{display:flex;flex-direction:column;gap:16px}main>*{width:100%}.directory{padding:14px}nav{grid-template-columns:repeat(3,1fr);gap:15px;margin:16px 0}nav small,.directory .footnote{display:none}.right{display:grid;grid-template-columns:1fr}.hero{min-height:390px}h1{font-size:25px}.photos{gap:10px;padding:16px 12px}.art{height:115px}footer{margin-top:60px;padding-bottom:65px}.status{right:16px;bottom:12px}.actions{flex-wrap:wrap}.radar{width:150px;height:150px}}@media(prefers-reduced-motion:reduce){.radar:before{animation:none}}
 
-    <!-- Или полный надёжный набор -->
-    <link rel="icon" href="https://i.ibb.co/gp35SWN/vivaldi-8-G0-JLWm-CEF.png" sizes="32x32" type="image/png">
-    <link rel="apple-touch-icon" href="https://i.ibb.co/gp35SWN/vivaldi-8-G0-JLWm-CEF.png" sizes="180x180">
-    <!-- WEBFONT: VT323 (pixel/terminal font, single weight 400) from Google Fonts.
-     To use a different font, change this <link> AND the font variable in :root. -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
-      rel="stylesheet"
-    />
+html{scroll-behavior:smooth;scroll-padding-top:24px}body{text-shadow:0 0 7px #9cffa333;background:radial-gradient(ellipse at 45% 20%,#10231866,transparent 65%),#050b07}.panel{box-shadow:0 0 16px #7bff9a0c,inset 0 0 28px #6fff8410;border-color:#436d4b}.bar{color:#b3dfad;text-shadow:0 0 8px #93ff9b66}.hero h1{text-shadow:0 0 10px #9dff9c66,0 0 28px #76ff8433}.badge{filter:drop-shadow(0 0 8px #baff7c70)}.radar{box-shadow:0 0 22px #90ff7e20,inset 0 0 22px #90ff7e15}.radar:after{text-shadow:0 0 5px #d6ffad,0 0 16px #c6ff8a}.navigation{position:sticky;top:24px}.navigation nav{margin:0;padding:14px 0;display:flex;flex-direction:column;gap:0}.navigation a{display:block;padding:12px 18px;text-decoration:none;font-size:11px;color:var(--text)}.navigation a:hover{color:var(--bright);background:#a2cda412;text-shadow:0 0 10px #adff9f88}.button{border:1px solid var(--line);padding:8px 12px;text-decoration:none}.button:hover{background:#a2cda41a;color:var(--bright);box-shadow:0 0 12px #9aff7830}.link-list{padding:10px 26px}.link-list>a{display:flex;justify-content:space-between;align-items:center;padding:18px 0;text-decoration:none;border-bottom:1px dashed var(--line)}.link-list>a:last-child{border:0}.link-list small{display:block;color:var(--dim);font-size:10px;margin-top:4px}.link-list>a:hover{color:var(--bright);text-shadow:0 0 10px #adff9f88}.status{box-shadow:0 0 20px #aaff7655}#gallery .art{height:180px}.notes{padding:26px}.note{padding:19px 0}footer{margin-top:80px}@media(max-width:680px){.navigation{position:static}.navigation nav{display:grid;grid-template-columns:1fr 1fr;padding:7px}.navigation a{padding:9px 10px;font-size:10px}#gallery .art{height:125px}.link-list{padding:8px 22px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
-    <style>
-      /* ====================================================================
-     LAPTOS — terminal home + content pages.
-       - HOME view = a bare Linux-style terminal (no border).
-       - utility commands (help/whoami/ls/clear) print inline.
-       - module commands (about/contacts/specs/credits) open a PAGE view.
-       - small dim buttons above the terminal are shortcuts to those pages.
-       - whole UI fits one screen, no page scroll; long content scrolls
-         inside its own area.
-       - phones: the terminal input is hidden, the buttons become the
-         primary control (module taps open pages; help/whoami still print).
-     ==================================================================== */
+/* Full-width phosphor layout */
+:root{--bg:#020503;--panel:#0b1b10;--line:#679b59;--text:#bcefa9;--dim:#8db783;--bright:#d4ff98}
+body{background:#020503;text-shadow:0 0 6px #b2ff8666}
+.shell{width:100%;max-width:none;margin:6px 0 0;padding:0 22px;min-height:calc(100vh - 6px);display:flex;flex-direction:column}
+header{padding:19px 0 16px;color:#9bc78d}
+main{grid-template-columns:220px minmax(0,1fr) 340px;gap:16px;flex:1;align-items:stretch}
+.panel{background:linear-gradient(135deg,#142a1980,#0a180fd9);border-color:#6f9e60;box-shadow:0 0 19px #99ff7525,inset 0 0 34px #8fff7710}
+.bar{color:#d0ffb1;background:repeating-linear-gradient(0deg,#263e24,#263e24 1px,#1b301e 2px,#1b301e 3px);border-color:#6f9e60;text-shadow:0 0 8px #bcff8c88}
+.navigation{align-self:start}.navigation a{font-size:12px;padding:15px 18px;color:#c2e9ac}
+main>.stack:not(.right){display:grid;grid-template-columns:1fr 1fr;gap:16px;align-content:start}
+#bio{grid-column:1/-1}#gallery{grid-column:1/-1}
+.hero{min-height:340px;padding:30px 34px;position:relative;overflow:hidden}
+.hero h1{font-size:clamp(28px,2.6vw,44px);text-shadow:0 0 8px #c0ff9c99,0 0 24px #8dff7766}
+.hero p{max-width:630px;font-size:14px;color:#a4ce95}
+.badge{margin:22px 0 24px 0;filter:drop-shadow(0 0 12px #c5ff8ca0)}
+.eyebrow{color:#aad394}.live:before{box-shadow:0 0 8px #dcffb7,0 0 20px #b6ff85}
+.link-list{padding:12px 26px}.link-list>a{padding:20px 0;font-size:14px}.link-list small{font-size:11px;color:#9bc28d}
+.notes{padding:24px 26px}.note{padding:17px 0;font-size:13px}.note small{color:#9bc28d}
+.photos{gap:20px;padding:22px}#gallery .art{height:clamp(200px,21vw,330px);box-shadow:0 0 15px #a6ff7b20;filter:brightness(1.2)}
+.photo small{font-size:11px;color:#a5ce95;margin-top:12px}.gallery-head,.gallery-bottom{font-size:10px;color:#a5ce95}
+.right{display:flex;flex-direction:column;gap:16px;align-self:stretch}.right #system{flex:1;min-height:390px}.right #system .pad{padding:32px 26px}.radar{width:210px;height:210px;margin:14px auto 40px;border-color:#92c777;box-shadow:0 0 28px #aaff7944,inset 0 0 30px #afff6925;filter:brightness(1.25)}
+dl{font-size:11px;gap:22px}dt{color:#a2cb90}dd{color:#d1ffaf}.right>.panel:last-child{min-height:240px}.terminal{font-size:12px;padding:24px}.log{color:#a6d196;max-height:260px;min-height:70px}.hint{margin-top:15px}.command{margin-top:25px}.command input{border-color:#84b16c}
+footer{margin-top:18px;padding:16px 0 52px;color:#95be86}.status{bottom:12px;right:22px;background:#d0ff96;box-shadow:0 0 14px #b6ff8399,0 0 38px #aaff7755}
+@media(min-width:1650px){main{grid-template-columns:250px minmax(0,1fr) 390px}.hero{min-height:375px}.hero p{max-width:750px}.hero .badge{position:absolute;right:55px;top:70px;width:220px}.hero h1{margin-top:40px}.hero p{max-width:65%}.right #system{min-height:480px}}
+@media(max-width:1150px){main{grid-template-columns:180px minmax(0,1fr) 270px;gap:12px}.right #system .pad{padding:22px 18px}.radar{width:180px;height:180px}main>.stack:not(.right){grid-template-columns:1fr;gap:12px}#bio,#gallery{grid-column:auto}.hero{padding:26px}.navigation a{font-size:10px;padding:14px}#gallery .art{height:190px}.photos{gap:12px;padding:16px}.right{gap:12px}.terminal{padding:18px;font-size:11px}}
+@media(max-width:850px){main{grid-template-columns:165px minmax(0,1fr)}.right{grid-column:2;display:grid;grid-template-columns:1fr 1fr;align-items:stretch}.right #system{min-height:0}.right #system .pad{padding:18px}.radar{width:130px;height:130px;margin:8px auto 24px}dl{gap:12px;font-size:10px}.terminal{padding:16px;font-size:10px}.right>.panel:last-child{min-height:0}.hero h1{font-size:30px}}
+@media(max-width:680px){.shell{padding:0 12px}header{padding-top:14px}main{display:flex;gap:12px}.navigation{width:100%}.navigation nav{grid-template-columns:repeat(3,1fr)}.navigation a{font-size:9px;padding:10px 6px}main>.stack:not(.right){display:grid;grid-template-columns:1fr;width:100%}.hero{min-height:365px;padding:26px 22px}.hero h1{font-size:29px}.hero p{font-size:13px}.right{display:grid;grid-template-columns:1fr;width:100%}.right #system .pad{padding:24px}.radar{width:180px;height:180px}dl{font-size:11px;gap:15px}#gallery .art{height:160px}.photos{gap:9px;padding:14px}.photo small{font-size:9px}.terminal{font-size:12px;padding:22px}.right>.panel:last-child{min-height:220px}.status{right:12px}footer{margin-top:16px;font-size:8px}.gallery-head,.gallery-bottom{font-size:8px}}
 
-      /* ============================  THEME  ============================
-     Main control panel — change a value and it updates everywhere.
-       colors -> --bg/--fg/--fg-bright/--dim/--dimmer/--hair
-       FONT   -> --mono   ·   spacing -> --pad   ·   motion -> --ease
-     ================================================================ */
-      :root {
-        --bg: #000000; /* page background (pure black)             */
-        --fg: #ececec; /* near-white primary text                 */
-        --fg-bright: #ffffff; /* emphasised text                         */
-        --dim: #6f6f6f; /* secondary text                          */
-        --dimmer: #454545; /* hairlines, annotations, chrome          */
-        --hair: rgba(255, 255, 255, 0.09);
-        /* SITE FONT — VT323. Swap this line + the <link> to re-typeface.
-       (the ASCII logo keeps its own monospace, see .ascii-logo) */
-        --mono: "VT323", ui-monospace, "Courier New", monospace;
-        --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-        --pad: clamp(26px, 6vw, 96px); /* outer page margin        */
-      }
+/* Use the navigation row instead of reserving an empty sidebar. */
+main{grid-template-columns:minmax(0,1fr) 340px;align-items:start}
+.navigation{grid-column:1/-1;position:static;align-self:stretch;width:100%}
+.navigation .bar{display:none}
+.navigation nav{display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;padding:0;margin:0;gap:0}
+.navigation a{flex:1;text-align:center;padding:13px 16px;border-right:1px solid var(--line);white-space:nowrap}
+.navigation a:last-child{border-right:0}
+main>.stack:not(.right){grid-column:1;min-width:0}
+.right{grid-column:2;grid-row:2;align-self:stretch}
+@media(min-width:1650px){main{grid-template-columns:minmax(0,1fr) 390px}}
+@media(max-width:1150px){main{grid-template-columns:minmax(0,1fr) 270px}main>.stack:not(.right){grid-template-columns:1fr 1fr}#bio,#gallery{grid-column:1/-1}}
+@media(max-width:850px){main{grid-template-columns:minmax(0,1fr)}main>.stack:not(.right){grid-column:1;grid-template-columns:1fr 1fr}.right{grid-column:1;grid-row:auto;display:grid;grid-template-columns:1fr 1fr}.navigation a{padding:12px 9px;font-size:10px}#gallery .art{height:220px}}
+@media(max-width:680px){main{display:grid;grid-template-columns:minmax(0,1fr)}.navigation nav{display:flex;flex-wrap:wrap}.navigation a{flex:1 1 33%;font-size:9px;padding:10px 6px;border:0}main>.stack:not(.right){grid-template-columns:1fr}#bio,#gallery{grid-column:1}.right{grid-template-columns:1fr;grid-column:1}#gallery .art{height:160px}}
 
-      * {
-        box-sizing: border-box;
-      }
-      html,
-      body {
-        height: 100%;
-        overflow: hidden;
-      } /* whole UI fits one screen, no page scroll */
+/* Compact left column: navigation, links, then notes without a reserved gap. */
+main{grid-template-columns:260px minmax(0,1fr) 320px;align-items:start}
+.left-stack{display:flex;flex-direction:column;gap:16px;min-width:0}
+.navigation{position:static;width:100%}
+.navigation .bar{display:flex}
+.navigation nav{display:flex;flex-direction:column;gap:0;padding:12px 0}
+.navigation a{flex:none;text-align:left;white-space:normal;border:0;padding:13px 18px;font-size:11px}
+main>.stack:not(.right){grid-column:2;display:flex;flex-direction:column;gap:16px;min-width:0}
+.right{grid-column:3;grid-row:auto;align-self:start;display:flex;flex-direction:column}
+.left-stack .link-list{padding:5px 18px}.left-stack .link-list>a{font-size:12px;padding:16px 0}.left-stack .notes{padding:20px 18px}.left-stack .note{font-size:12px;padding:16px 0}
+.hero{min-height:420px}.hero .badge{position:static;margin:25px 0}.hero h1{margin-top:0}.hero p{max-width:100%}
+.right #system{min-height:390px;flex:none}
+@media(min-width:1650px){main{grid-template-columns:290px minmax(0,1fr) 360px}}
+@media(max-width:1150px){main{grid-template-columns:220px minmax(0,1fr)}.right{grid-column:2;grid-row:auto;display:grid;grid-template-columns:1fr 1fr}.left-stack{grid-column:1;grid-row:1 / span 2}.right #system{min-height:0}.right .radar{width:140px;height:140px}}
+@media(max-width:680px){main{display:flex;flex-direction:column}.left-stack{width:100%;display:contents}.navigation{order:0}.navigation nav{display:flex;flex-direction:column;padding:8px 0}.navigation a{font-size:11px;padding:11px 18px;text-align:left}.left-stack #links{order:2;width:100%}.left-stack #notes{order:3;width:100%}main>.stack:not(.right){display:contents}#bio{order:1;width:100%}#gallery{order:4;width:100%}.right{order:5;width:100%;display:flex;flex-direction:column}.hero{min-height:390px}}
 
-      body {
-        margin: 0;
-        background: var(--bg);
-        color: var(--fg);
-        font-family: var(--mono);
-        font-weight: 300;
-        font-size: clamp(16px, 1.25vw, 19px); /* VT323 reads small — sized up */
-        line-height: 1.55;
-        letter-spacing: 0.01em;
-        -webkit-font-smoothing: antialiased;
-        text-rendering: optimizeLegibility;
-      }
+main{grid-template-columns:260px minmax(0,1fr)}.left-stack{grid-row:auto}main>.stack:not(.right){grid-column:2}
+.fetch-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 24px;border-bottom:1px dashed var(--line);color:var(--dim);font-size:11px}.fetch-tabs{display:flex;gap:6px}.fetch-tabs button{padding:7px 16px}.fetch-tabs button[aria-pressed="true"]{background:var(--bright);color:#14230e;box-shadow:0 0 16px #baff7955;text-shadow:none}.fetch-body{display:flex;align-items:center;gap:36px;padding:30px 34px;overflow:hidden}.fetch-body pre{font-size:13px;line-height:1.25;flex-shrink:0;margin:0;color:var(--bright);text-shadow:0 0 9px #acff8099}.fetch-info{min-width:0}.fetch-user{color:var(--bright);font-weight:bold;font-size:15px}.fetch-rule{color:var(--line);overflow:hidden;white-space:nowrap;margin:5px 0 15px}.fetch-info dl{grid-template-columns:65px minmax(0,1fr);gap:7px 18px;font-size:12px}.fetch-info dt{color:var(--bright);font-weight:bold}.fetch-info dd{overflow-wrap:anywhere;color:var(--text)}.fetch-info p{font-size:10px;margin:16px 0 0;color:var(--dim)}.fetch-colors{display:flex;margin-top:20px}.fetch-colors i{width:22px;height:13px;background:#173720}.fetch-colors i:nth-child(2){background:#315530}.fetch-colors i:nth-child(3){background:#49733e}.fetch-colors i:nth-child(4){background:#669250}.fetch-colors i:nth-child(5){background:#87b567}.fetch-colors i:nth-child(6){background:#a2d67b}.fetch-colors i:nth-child(7){background:#c4ec98}.fetch-colors i:nth-child(8){background:#e0ffb3}
+@media(min-width:1650px){main{grid-template-columns:290px minmax(0,1fr)}}@media(max-width:1150px){main{grid-template-columns:220px minmax(0,1fr)}main>.stack:not(.right){display:flex;flex-direction:column}.fetch-body{gap:22px;padding:24px}.fetch-body pre{font-size:11px}.fetch-info dl{font-size:11px}}
+@media(max-width:850px){.fetch-body{flex-direction:column;align-items:flex-start}.fetch-body pre{font-size:12px}.fetch-info{width:100%}}@media(max-width:680px){main{display:flex}.left-stack{display:contents}main>.stack:not(.right){display:contents}#neofetch{order:3;width:100%}#gallery{order:4}.fetch-toolbar{padding:14px;gap:10px;flex-wrap:wrap}.fetch-tabs button{padding:7px 14px}.fetch-body{padding:24px;gap:24px}.fetch-info dl{font-size:12px}.fetch-body pre{align-self:center}}
 
-      /* ---------- atmospheric overlays (CRT scanlines + vignette) ----------
-     To remove the CRT vibe: delete the two <div>s in the markup. */
-      .scanlines,
-      .vignette {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-      }
-      .scanlines {
-        z-index: 60;
-        background: repeating-linear-gradient(
-          to bottom,
-          rgba(255, 255, 255, 0.03) 0px,
-          rgba(255, 255, 255, 0.03) 1px,
-          transparent 1px,
-          transparent 3px
-        );
-        mix-blend-mode: screen;
-        opacity: 0.7;
-      }
-      .vignette {
-        z-index: 55;
-        background: radial-gradient(
-          ellipse at 50% 46%,
-          transparent 52%,
-          rgba(0, 0, 0, 0.72) 100%
-        );
-      }
-      @media (prefers-reduced-motion: no-preference) {
-        .scanlines {
-          animation: scan 9s linear infinite;
-        }
-      }
-      @keyframes scan {
-        from {
-          background-position: 0 0;
-        }
-        to {
-          background-position: 0 6px;
-        }
-      }
+/* Compact neofetch: logo and specifications remain side by side. */
+.fetch-toolbar{padding:10px 18px;font-size:10px}.fetch-tabs button{padding:4px 12px;font-size:10px}
+.fetch-body{display:grid;grid-template-columns:max-content minmax(0,1fr);align-items:center;gap:26px;padding:20px 24px}
+.fetch-body pre{font-size:10px;line-height:1.15;align-self:center}.fetch-info{width:auto;min-width:0}.fetch-user{font-size:13px}.fetch-rule{margin:3px 0 10px}.fetch-info dl{grid-template-columns:55px minmax(0,1fr);gap:4px 12px;font-size:11px;line-height:1.45}.fetch-info p{font-size:9px;margin-top:10px}.fetch-colors{margin-top:12px}.fetch-colors i{width:18px;height:10px}
+@media(max-width:850px){.fetch-body{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:16px;padding:18px}.fetch-body pre{font-size:8px}.fetch-info dl{font-size:10px;grid-template-columns:43px minmax(0,1fr);gap:4px 8px}.fetch-user{font-size:11px}}
+@media(max-width:680px){.fetch-body{grid-template-columns:max-content minmax(0,1fr);gap:14px;padding:16px 12px}.fetch-body pre{font-size:8px;line-height:1.2}.fetch-info dl{font-size:10px;grid-template-columns:43px minmax(0,1fr)}.fetch-toolbar{padding:10px 12px}.fetch-rule{max-width:100%}}
+@media(max-width:380px){.fetch-body{gap:9px}.fetch-body pre{font-size:6px}.fetch-info dl{font-size:9px;grid-template-columns:38px minmax(0,1fr);gap:4px 6px}}
 
-      .glow {
-        text-shadow: 0 0 18px rgba(255, 255, 255, 0.226);
-      }
+.fetch-body{column-gap:48px}
+@media(max-width:850px){.fetch-body{column-gap:30px}}
+@media(max-width:680px){.fetch-body{column-gap:24px}}
+@media(max-width:380px){.fetch-body{column-gap:16px}}
 
-      /* ---------- layout shell (fixed-height, clips overflow) ---------- */
-      .shell {
-        position: relative;
-        z-index: 10;
-        height: 100vh;
-        height: 100dvh;
-        overflow: hidden;
-        padding: var(--pad);
-        display: flex;
-        flex-direction: column;
-      }
+.fetch-body{column-gap:76px}
+@media(max-width:850px){.fetch-body{column-gap:44px}}
+@media(max-width:680px){.fetch-body{column-gap:32px}}
+@media(max-width:380px){.fetch-body{column-gap:20px}}
 
-      /* top status chrome — EDIT the OS name / version / right label.
-     The clock (#clock) is filled live by JS; leave its text alone. */
-      .statusbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 24px;
-        font-size: 13px;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--dim);
-        flex-wrap: wrap;
-        user-select: none;
-        flex: none;
-      }
-      .statusbar .sys {
-        color: var(--fg);
-      }
-      .statusbar .node {
-        display: inline-block;
-        width: 0.5em;
-        height: 0.5em;
-        border-radius: 50%;
-        background: var(--fg);
-        margin-right: 0.7em;
-        transform: translateY(-0.05em);
-        animation: nodepulse 2.4s var(--ease) infinite;
-      }
-      @keyframes nodepulse {
-        0%,
-        100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.28;
-        }
-      }
-      .statusbar .right {
-        text-align: right;
-      }
-      .statusbar .clock {
-        font-variant-numeric: tabular-nums;
-        color: var(--fg);
-      }
+.fetch-body{column-gap:120px}
+@media(max-width:850px){.fetch-body{column-gap:60px}}
+@media(max-width:680px){.fetch-body{column-gap:40px}}
+@media(max-width:380px){.fetch-body{column-gap:24px}}
 
-      @keyframes blink {
-        50% {
-          opacity: 0;
-        }
-      } /* console caret */
+.fetch-body{column-gap:170px}
+@media(max-width:850px){.fetch-body{column-gap:75px}}
+@media(max-width:680px){.fetch-body{column-gap:44px}}
+@media(max-width:380px){.fetch-body{column-gap:24px}}
 
-      /* the stage holds all views; only the active one is shown */
-      .stage {
-        flex: 1;
-        min-height: 0;
-        display: flex;
-        align-items: stretch;
-      }
+.fetch-body{grid-template-columns:300px minmax(0,1fr);column-gap:32px}
+.fetch-body pre{justify-self:center;align-self:center}
+@media(max-width:850px){.fetch-body{grid-template-columns:200px minmax(0,1fr);column-gap:20px}}
+@media(max-width:680px){.fetch-body{grid-template-columns:160px minmax(0,1fr);column-gap:16px}}
+@media(max-width:380px){.fetch-body{grid-template-columns:110px minmax(0,1fr);column-gap:12px}}
 
-      /* ---------- VIEW SWITCHING (home terminal + content pages) ---------- */
-      .view {
-        display: none;
-      }
-      .view.active {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        min-height: 0;
-        width: 100%;
-        max-width: 880px;
-        margin-top: clamp(16px, 4vh, 44px);
-      }
-      .view.enter {
-        animation: viewIn 0.34s var(--ease) both;
-      }
-      @keyframes viewIn {
-        from {
-          opacity: 0;
-          transform: translateY(10px);
-        }
-        to {
-          opacity: 1;
-          transform: none;
-        }
-      }
+.shell{padding-top:18px}.panel{box-shadow:0 0 18px #99ff7518;background:#0b1b10b3}.bar{background:transparent;border-bottom:0;font-size:11px;letter-spacing:1px;padding:14px 20px 0}.hero{min-height:0;padding:28px 34px 32px}.hero h1{margin:0 0 18px}.hero p{margin-bottom:0}.actions{margin-top:24px}.button{border:0;padding:0 0 3px;border-bottom:1px solid #679b5966}.button:hover{box-shadow:none;background:none}.actions{gap:24px}.navigation nav{padding:12px 0}.navigation a{padding:12px 20px}.link-list>a{border:0}.link-list small{display:none}.fetch-toolbar{border:0;justify-content:flex-end;padding:0 20px}.fetch-tabs button{border:0;box-shadow:none}.fetch-tabs button[aria-pressed="true"]{background:#b5ee8b20;color:var(--bright);box-shadow:none}.fetch-body{padding-top:16px}.fetch-user{margin-bottom:12px}.art{border:0;box-shadow:none!important}.photo:hover{background:none}.photo small{margin-top:8px}.photos{padding-top:18px}.shell{padding-bottom:20px}
+@media(max-width:680px){.hero{min-height:0;padding:24px 22px}.fetch-toolbar{padding-top:8px}.bar{padding-left:18px}.actions{gap:20px}}
 
-      /* ---------- BRAND LOGO (ASCII wordmark, home only) ----------
-     Uses a REAL system monospace (not --mono / VT323) so box-drawing
-     glyphs (█ ╗ ═) align. Resize via --logo-size. */
-      .heading-block {
-        margin: 0 0 8px;
-        flex: none;
-      }
-      .ascii-logo {
-        --logo-size: clamp(6px, 2.2vw, 18px); /* <- GROW / SHRINK the logo */
-        margin: 0;
-        font-family:
-          ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono",
-          "Courier New", monospace;
-        font-size: var(--logo-size);
-        line-height: 1.04;
-        letter-spacing: 0;
-        color: var(--fg-bright);
-        white-space: pre;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-      .ascii-logo::-webkit-scrollbar {
-        display: none;
-      }
-      .vh {
-        position: absolute !important;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
-        white-space: nowrap;
-        border: 0;
-      }
-      .crumb {
-        display: block;
-        margin-top: 18px;
-        font-size: clamp(15px, 1.9vw, 19px);
-        letter-spacing: 0.16em;
-        color: var(--dim);
-      }
+/* Three text sizes: heading, body, and metadata. ASCII artwork scales separately. */
+:root{--type-heading:32px;--type-body:13px;--type-small:11px}
+body,button,input,.navigation a,.left-stack .link-list>a,.hero p,.fetch-user{font-size:var(--type-body)}
+.hero h1{font-size:var(--type-heading)}
+.bar,.actions,.fetch-toolbar,.fetch-tabs button,.fetch-info dl,.photo small,.fetch-info p,dialog p{font-size:var(--type-small)}
+.fetch-info dl{line-height:1.6}.fetch-user{font-weight:bold}
+.button{border:1px solid #679b597d;padding:7px 12px}.button:hover{border-color:var(--bright);background:#b5ee8b0d}
+.fetch-tabs{border:1px solid #679b597d;gap:0}.fetch-tabs button{padding:6px 14px;border:0}.fetch-tabs button+button{border-left:1px solid #679b597d}.fetch-tabs button[aria-pressed="true"]{background:#b5ee8b25}
+.navigation a:hover{box-shadow:inset 2px 0 var(--bright)}
+.left-stack .link-list>a+a{border-top:1px solid #679b5938}
+#close{border:1px solid #679b597d;font-size:var(--type-small)}
+@media(max-width:850px){.navigation a,.left-stack .link-list>a,.hero p,.fetch-user{font-size:var(--type-body)}.fetch-info dl,.fetch-tabs button,.photo small,.fetch-toolbar{font-size:var(--type-small)}}
+@media(max-width:680px){:root{--type-heading:28px}.hero h1{font-size:var(--type-heading)}.navigation a,.left-stack .link-list>a,.hero p,.fetch-user{font-size:var(--type-body)}.fetch-info dl,.fetch-tabs button,.photo small,.fetch-toolbar,.bar,.actions{font-size:var(--type-small)}}
+@media(max-width:380px){.fetch-info dl{font-size:var(--type-small)}}
 
-      .rule {
-        height: 1px;
-        background: var(--hair);
-        border: 0;
-        margin: clamp(22px, 4vh, 38px) 0;
-        width: 100%;
-        flex: none;
-      }
+.fetch-body{grid-template-columns:300px minmax(0,1fr);column-gap:32px;padding-top:18px;padding-bottom:24px}
+.fetch-body pre{font-size:13px;line-height:1.15;color:#b5e99c}
+.fetch-user{font-size:var(--type-body);border-bottom:1px solid #8bb67a99;padding-bottom:7px;margin-bottom:10px;max-width:540px}
+.fetch-info dl{grid-template-columns:86px minmax(0,1fr);gap:2px 18px;font-size:var(--type-body);line-height:1.45}
+.fetch-info dt{font-weight:bold;color:#a9c99c}.fetch-info dd{color:#c5e3b6}.fetch-info dt:nth-of-type(6),.fetch-info dt:nth-of-type(6)+dd{margin-top:18px}
+@media(max-width:1150px){.fetch-body{grid-template-columns:240px minmax(0,1fr);gap:24px}.fetch-body pre{font-size:12px}.fetch-info dl{grid-template-columns:70px minmax(0,1fr);gap:3px 12px;font-size:var(--type-small)}}
+@media(max-width:850px){.fetch-body{grid-template-columns:180px minmax(0,1fr);gap:18px}.fetch-body pre{font-size:10px}.fetch-info dl{grid-template-columns:57px minmax(0,1fr);gap:3px 9px}}
+@media(max-width:680px){.fetch-body{grid-template-columns:165px minmax(0,1fr);gap:16px;padding:18px 12px}.fetch-body pre{font-size:10px}.fetch-info dl{grid-template-columns:1fr;gap:0;font-size:var(--type-small)}.fetch-info dd{margin-bottom:5px}.fetch-info dt:nth-of-type(6)+dd{margin-top:0}.fetch-info dt:nth-of-type(6){margin-top:12px}}
+@media(max-width:380px){.fetch-body{grid-template-columns:128px minmax(0,1fr);gap:12px}.fetch-body pre{font-size:8px}}
 
-      /* ---------- module buttons (shortcuts to the pages) ----------
-     Each runs the matching command. data-cmd must be a real command. */
-      .quicklinks {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: baseline;
-        gap: 0 1.5ch;
-        margin: 0 0 clamp(20px, 3.5vh, 30px);
-        flex: none;
-        font-size: 14px;
-        letter-spacing: 0.08em;
-        text-transform: lowercase;
-        user-select: none;
-      }
-      .quicklinks .ql {
-        background: none;
-        border: 0;
-        padding: 0;
-        cursor: pointer;
-        font-family: inherit;
-        font-size: inherit;
-        letter-spacing: inherit;
-        color: var(--dim);
-        transition:
-          color 0.2s var(--ease),
-          text-shadow 0.2s var(--ease);
-        -webkit-tap-highlight-color: transparent;
-      }
-      .quicklinks .ql:hover,
-      .quicklinks .ql:focus-visible {
-        color: var(--fg-bright);
-        outline: none;
-        text-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
-      }
-      .quicklinks .ql::before {
-        content: "·";
-        margin-right: 1.5ch;
-        color: var(--dimmer);
-      }
-      .quicklinks .ql:first-child::before {
-        content: "";
-        margin: 0;
-      }
+/* Shared interaction treatment for navigation and outbound links. */
+.navigation nav{padding:8px}.navigation a,.left-stack .link-list>a{padding:12px;min-height:44px;border:1px solid transparent;background:transparent;color:var(--text);text-shadow:inherit;box-shadow:none;transition:background-color .15s,border-color .15s,color .15s}
+.left-stack .link-list{padding:8px}.left-stack .link-list>a+a{border-top:1px solid transparent}
+.navigation a:hover,.navigation a:focus-visible,.left-stack .link-list>a:hover,.left-stack .link-list>a:focus-visible{color:var(--bright);background:#b5ee8b16;border:1px solid #9ac87d80;box-shadow:inset 2px 0 var(--bright);text-shadow:0 0 8px #baff8d66;outline:none}
+@media(prefers-reduced-motion:reduce){.navigation a,.left-stack .link-list>a{transition:none}}
 
-      /* ====================  TERMINAL (no border)  ==================== */
-      .terminal {
-        flex: 1;
-        min-height: 0;
-        display: flex;
-        flex-direction: column;
-      }
-      .term-out {
-        margin: 0 0 6px;
-        flex: 0 1 auto;
-        min-height: 0;
-        overflow-y: auto;
-        white-space: pre-wrap;
-        word-break: break-word;
-        font-size: clamp(15px, 1.5vw, 18px);
-        line-height: 1.6;
-        color: var(--fg);
-      }
-      .term-out:empty {
-        display: none;
-      }
-      .term-out::-webkit-scrollbar {
-        width: 6px;
-      }
-      .term-out::-webkit-scrollbar-thumb {
-        background: var(--dimmer);
-        border-radius: 3px;
-      }
-      .term-block {
-        margin: 0 0 1em;
-      }
-      .term-block:last-child {
-        margin-bottom: 0.3em;
-      }
-      .term-echo {
-        color: var(--fg-bright);
-      }
-      .term-out .prompt {
-        color: var(--dim);
-      }
-      .term-key {
-        color: var(--dim);
-      }
-      .term-err {
-        color: var(--fg);
-      }
+.navigation a,.left-stack .link-list>a{border:0;box-shadow:none}.left-stack .link-list>a+a{border:0}
+.navigation a:hover,.navigation a:focus-visible,.left-stack .link-list>a:hover,.left-stack .link-list>a:focus-visible{border:0;background:#a2cda412;color:var(--bright);box-shadow:inset 2px 0 var(--bright);text-shadow:0 0 10px #adff9f88}
+.navigation a:focus-visible,.left-stack .link-list>a:focus-visible{outline:2px solid var(--bright);outline-offset:2px}
 
-      .term-line {
-        flex: none;
-        display: flex;
-        align-items: center;
-        gap: 0.7ch;
-        font-size: clamp(16px, 1.8vw, 22px);
-      }
-      .term-line .prompt {
-        color: var(--fg-bright);
-        white-space: nowrap;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.35);
-      }
-      .cmd-field {
-        position: relative;
-        flex: 1;
-        min-width: 0;
-        display: flex;
-        align-items: center;
-      }
-      #cmd {
-        flex: 1;
-        min-width: 0; /* fills the line — text never wraps under $ */
-        background: none;
-        border: 0;
-        outline: none;
-        font-family: inherit;
-        font-size: inherit;
-        letter-spacing: inherit;
-        color: var(--fg-bright);
-        caret-color: var(--fg-bright);
-        padding: 0;
-      }
-      /* fake caret (shown only when the field is empty + unfocused).
-     Absolutely placed at the field's start so it hugs the prompt; width
-     matched to the native text caret so it doesn't look thicker. */
-      .cmd-field .fakecaret {
-        position: absolute;
-        left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        pointer-events: none;
-        width: 1px;
-        height: 1.1em;
-        background: var(--fg-bright);
-        animation: blink 1.05s steps(1) infinite;
-      }
-      .cmd-field.typing .fakecaret {
-        display: none;
-      }
+/* Hover marker sits directly over the panel's left border. */
+.navigation nav,.left-stack .link-list{padding:8px 0}
+.navigation a,.left-stack .link-list>a{position:relative;padding:12px 20px}
+.navigation a:hover,.navigation a:focus-visible,.left-stack .link-list>a:hover,.left-stack .link-list>a:focus-visible{box-shadow:none}
+.navigation a::before,.left-stack .link-list>a::before{content:'';position:absolute;left:-1px;top:0;bottom:0;width:1px;background:var(--bright);opacity:0;pointer-events:none}
+.navigation a:hover::before,.navigation a:focus-visible::before,.left-stack .link-list>a:hover::before,.left-stack .link-list>a:focus-visible::before{opacity:1}
 
-      /* ====================  CONTENT PAGES  ==================== */
-      .page-head {
-        display: flex;
-        align-items: baseline;
-        gap: 16px;
-        margin: 0 0 4px;
-        flex: none;
-      }
-      .back-btn {
-        background: none;
-        border: 0;
-        cursor: pointer;
-        padding: 0;
-        font-family: inherit;
-        font-size: 14px;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--dim);
-        transition:
-          color 0.2s var(--ease),
-          transform 0.2s var(--ease);
-        -webkit-tap-highlight-color: transparent;
-      }
-      .back-btn:hover,
-      .back-btn:focus-visible {
-        color: var(--fg);
-        outline: none;
-        transform: translateX(-0.3ch);
-      }
-      .back-btn .ar {
-        color: var(--fg);
-        margin-right: 0.5em;
-      }
-      .page-eyebrow {
-        flex: none;
-        margin: 8px 0 0;
-        font-size: 12px;
-        letter-spacing: 0.4em;
-        text-transform: uppercase;
-        color: var(--dim);
-      }
-      .page-title {
-        flex: none;
-        margin: 4px 0;
-        font-weight: 200;
-        font-size: clamp(30px, 5.6vw, 58px);
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: var(--fg-bright);
-        line-height: 1.04;
-      }
-      .page-sub {
-        flex: none;
-        margin: 0 0 20px;
-        font-size: clamp(14px, 1.7vw, 17px);
-        letter-spacing: 0.08em;
-        color: var(--dim);
-      }
-      .page-body {
-        flex: 0 1 auto;
-        min-height: 0;
-        overflow-y: auto;
-      } /* long content scrolls here, not the page */
-      .page-body::-webkit-scrollbar {
-        width: 6px;
-      }
-      .page-body::-webkit-scrollbar-thumb {
-        background: var(--dimmer);
-        border-radius: 3px;
-      }
+.navigation a::before,.left-stack .link-list>a::before{width:3px;left:-1px}
 
-      .lede {
-        max-width: 660px;
-        font-size: clamp(17px, 2.1vw, 21px);
-        line-height: 1.8;
-        color: var(--fg);
-        margin: 0 0 26px;
-      }
-      .lede strong {
-        color: var(--fg-bright);
-        font-weight: 400;
-      }
+.left-stack .panel>.bar{display:flex;padding:10px 18px;background:#a7df8612;border-bottom:1px solid #679b5980;color:var(--bright);font-size:var(--type-small);font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;text-shadow:0 0 7px #baff8d55}
+.left-stack .navigation nav,.left-stack .link-list{padding-top:6px;padding-bottom:6px}
 
-      dl.data {
-        display: grid;
-        grid-template-columns: max-content 1fr;
-        gap: 0 clamp(20px, 4vw, 54px);
-        margin: 0;
-        max-width: 720px;
-      }
-      dl.data dt {
-        color: var(--dim);
-        padding: 10px 0;
-        font-size: 15px;
-        letter-spacing: 0.1em;
-        text-transform: lowercase;
-        border-bottom: 1px solid var(--hair);
-        white-space: nowrap;
-      }
-      dl.data dd {
-        margin: 0;
-        padding: 10px 0;
-        color: var(--fg);
-        font-size: 16px;
-        letter-spacing: 0.02em;
-        border-bottom: 1px solid var(--hair);
-      }
-      dl.data .muted {
-        color: var(--dim);
-      }
-      .credits-body {
-        max-width: 600px;
-        font-size: clamp(17px, 2.1vw, 21px);
-        line-height: 1.85;
-        color: var(--fg);
-      }
-      .credits-meta {
-        margin-top: 26px;
-        font-size: 12px;
-        letter-spacing: 0.26em;
-        text-transform: uppercase;
-        color: var(--dimmer);
-      }
-      /* tiny, easy-to-miss note that the credit text itself was written by claude */
-      .credits-note {
-        margin-top: 16px;
-        font-size: 10px;
-        letter-spacing: 0.18em;
-        color: var(--dimmer);
-        opacity: 0.55;
-      }
-      a.lnk {
-        color: var(--fg-bright);
-        text-decoration: none;
-        border-bottom: 1px solid var(--dim);
-        transition: border-color 0.2s var(--ease);
-      }
-      a.lnk:hover,
-      a.lnk:focus-visible {
-        border-bottom-color: var(--fg);
-        outline: none;
-      }
+/* One header treatment across all panels. */
+.panel>.bar,.left-stack .panel>.bar{display:flex;align-items:center;min-height:38px;padding:10px 18px;margin:0;background:#a7df8612;border-bottom:1px solid #679b5980;color:var(--bright);font-size:var(--type-small);font-weight:bold;line-height:1.6;letter-spacing:1.5px;text-transform:uppercase;text-shadow:0 0 7px #baff8d55}
 
-      /* the "chill" easter-egg word (in the about page) */
-      .egg-word {
-        color: var(--fg-bright);
-        cursor: pointer;
-        border-bottom: 1px dotted var(--dim);
-        -webkit-tap-highlight-color: transparent;
-      }
-      .egg-word:hover {
-        border-bottom-color: var(--fg);
-      }
+#neofetch .fetch-toolbar{display:flex;justify-content:flex-end;align-items:center;padding:14px 18px 0;margin:0;border:0;gap:0}
+#neofetch .fetch-tabs{display:inline-flex;align-items:stretch;gap:0;margin:0;border:1px solid #679b597d}
+#neofetch .fetch-tabs button{display:flex;align-items:center;justify-content:center;min-width:76px;min-height:32px;margin:0;padding:7px 14px;border:0;line-height:1.4;font-size:var(--type-small)}
+#neofetch .fetch-tabs button+button{border-left:1px solid #679b597d}
+#neofetch .fetch-body{padding-top:18px}
 
-      .footer-line {
-        flex: none;
-        padding-top: clamp(20px, 4vh, 40px);
-        font-size: 12px;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--dimmer);
-        display: flex;
-        justify-content: space-between;
-        gap: 18px;
-        flex-wrap: wrap;
-        user-select: none;
-      }
+#neofetch>.bar{justify-content:flex-start;gap:18px;flex-wrap:wrap;padding-top:7px;padding-bottom:7px}
+#neofetch .fetch-toolbar{display:flex;justify-content:flex-start;padding:0;margin:0}
+#neofetch .fetch-tabs button{min-width:65px;min-height:26px;padding:4px 12px;letter-spacing:0;font-weight:normal}
+#neofetch .fetch-body{padding-top:20px}
 
-      /* ---------- boot overlay ---------- */
-      #boot {
-        position: fixed;
-        inset: 0;
-        z-index: 80;
-        background: #000;
-        padding: var(--pad);
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        cursor: pointer;
-        font-size: clamp(13px, 1.5vw, 16px);
-        letter-spacing: 0.06em;
-        color: var(--dim);
-      }
-      #boot.gone {
-        animation: bootout 0.5s var(--ease) forwards;
-      }
-      @keyframes bootout {
-        to {
-          opacity: 0;
-          visibility: hidden;
-        }
-      }
-      #boot-log {
-        white-space: pre-wrap;
-        margin: 0;
-        font-family: inherit;
-      }
-      #boot-log .ok {
-        color: var(--fg);
-      }
-      #boot-log .hot {
-        color: var(--fg-bright);
-        text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
-      }
-      #boot-skip {
-        position: absolute;
-        top: var(--pad);
-        right: var(--pad);
-        font-size: 11px;
-        letter-spacing: 0.3em;
-        text-transform: uppercase;
-        color: var(--dimmer);
-      }
+#neofetch>.bar{justify-content:space-between}#neofetch .fetch-toolbar{margin-left:auto}
 
-      /* ---------- PHONES (<= 600px) ----------
-     The typing terminal input is removed; the BUTTONS become the key
-     control (module taps open pages; help/whoami still print inline). */
-      @media (max-width: 600px) {
-        body {
-          font-size: 17px;
-          letter-spacing: 0;
-        }
-        .statusbar {
-          font-size: 12px;
-          letter-spacing: 0.16em;
-        }
-        .footer-line {
-          font-size: 11px;
-          letter-spacing: 0.16em;
-        }
+#neofetch>.bar{padding-right:0;padding-top:0;padding-bottom:0;min-height:38px;align-items:stretch;gap:12px}
+#neofetch>.bar>span{display:flex;align-items:center;padding-top:10px;padding-bottom:10px}
+#neofetch .fetch-toolbar{align-self:stretch;align-items:stretch;margin-left:auto;padding:0}
+#neofetch .fetch-tabs{align-self:stretch;border:0;border-left:1px solid #679b597d}
+#neofetch .fetch-tabs button{min-height:38px;padding:8px 16px}
 
-        /* centre the ASCII wordmark on phones — shrink the <pre> to its content
-           width and centre it as one unit so the box-drawing glyphs stay aligned */
-        .ascii-logo {
-          width: -moz-fit-content;
-          width: fit-content;
-          max-width: 100%;
-          margin-left: auto;
-          margin-right: auto;
-        }
+#neofetch>.bar{padding:6px 8px 6px 18px;align-items:center;min-height:42px;gap:12px}
+#neofetch>.bar>span{padding:0;align-items:center}
+#neofetch .fetch-toolbar{align-self:center;align-items:center;margin-left:auto;padding:0}
+#neofetch .fetch-tabs{align-self:center;border:1px solid #679b597d}
+#neofetch .fetch-tabs button{min-height:28px;padding:5px 14px;line-height:1.4}
 
-        .terminal {
-          display: none;
-        } /* no terminal at all on phones */
-        .quicklinks .ql[data-cmd="help"] {
-          display: none;
-        } /* help needs the terminal -> hide it too */
+.webring-slots{display:flex;flex-wrap:wrap;gap:12px;padding:18px 20px}
+.webring-placeholder{width:88px;min-height:44px;border:1px dashed #679b597d;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--dim);font-size:var(--type-small);line-height:1.4;text-align:center}
+.webring-placeholder span{letter-spacing:1px}.webring-placeholder small{font-size:inherit;letter-spacing:0}
+@media(max-width:680px){.left-stack #webrings{order:5;width:100%}}
 
-        .quicklinks {
-          /* the buttons ARE the interface */
-          flex-direction: column;
-          gap: 0;
-          margin: clamp(10px, 3vh, 22px) 0 clamp(14px, 3vh, 24px);
-          font-size: clamp(24px, 7.5vw, 34px);
-          letter-spacing: 0.04em;
-          text-transform: uppercase;
-        }
-        .quicklinks .ql {
-          color: var(--fg);
-          padding: 12px 0;
-          width: 100%;
-        }
-        .quicklinks .ql:active {
-          color: var(--fg-bright);
-        }
-        .quicklinks .ql::before {
-          content: "";
-          margin: 0;
-        }
+.photo{display:block;text-decoration:none;color:inherit}.photo:focus-visible{outline:2px solid var(--bright);outline-offset:5px}.album-label{color:var(--bright)!important;margin-top:5px!important}.photo:hover .art{filter:brightness(1.35)}
 
-        dl.data {
-          grid-template-columns: 1fr;
-          gap: 0;
-        }
-        dl.data dt {
-          border-bottom: 0;
-          padding-bottom: 0;
-          padding-top: 14px;
-        }
-        dl.data dd {
-          padding-top: 2px;
-        }
-      }
+.clock-content{padding:18px 20px}.clock-content time{display:block;font-size:var(--type-heading);line-height:1.2;letter-spacing:1px;color:var(--bright);font-variant-numeric:tabular-nums}.clock-content #local-date{font-size:var(--type-body);margin-top:8px}.clock-content small{display:block;font-size:var(--type-small);color:var(--dim);margin-top:4px}
+.setup-specs{padding:18px 20px;margin:0;display:grid;grid-template-columns:36px minmax(0,1fr);gap:9px 12px;font-size:var(--type-small)}.setup-specs dt{color:var(--dim)}.setup-specs dd{margin:0;overflow-wrap:anywhere;color:var(--text)}
+.banner-space{display:flex;flex-wrap:wrap;gap:12px;padding:18px 20px}.banner-space span{display:flex;align-items:center;justify-content:center;width:88px;height:31px;border:1px dashed #679b597d;color:var(--dim);font-size:var(--type-small)}
+@media(max-width:680px){.left-stack #clock,.left-stack #setup,.left-stack #banners{width:100%;order:2}.left-stack #links{order:3}#neofetch{order:4}#gallery{order:5}.left-stack #webrings{order:6}}
 
-      /* ---------- SHORT SCREENS — squeeze so it still fits ---------- */
-      @media (max-height: 640px) {
-        :root {
-          --pad: clamp(16px, 4vw, 40px);
-        }
-        .view.active {
-          margin-top: clamp(8px, 2vh, 18px);
-        }
-        .rule {
-          margin: clamp(12px, 2.5vh, 22px) 0;
-        }
-        .crumb {
-          margin-top: 12px;
-        }
-      }
+#setup>summary.bar{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;padding:10px 18px;background:#a7df8612;color:var(--bright);font-size:var(--type-small);font-weight:bold;line-height:1.6;letter-spacing:1.5px;text-transform:uppercase;border-bottom:0}
+#setup>summary::-webkit-details-marker{display:none}#setup>summary::after{content:'+';font-size:var(--type-body)}#setup[open]>summary{border-bottom:1px solid #679b5980}#setup[open]>summary::after{content:'−'}#setup .setup-specs{grid-template-columns:55px minmax(0,1fr);font-size:var(--type-body);padding:22px 24px}
+.shell>#banners{width:100%;margin-top:16px}.shell>#banners .banner-space{min-height:68px}
+@media(max-width:680px){#setup{order:6;width:100%}.left-stack #webrings{order:7}}
 
-      @media (prefers-reduced-motion: reduce) {
-        * {
-          animation-duration: 0.001ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.001ms !important;
-        }
-      }
-    </style>
-    <script defer src="/_vercel/insights/script.js"></script>
-  </head>
-  <body>
-    <!-- ====================================================================
-       HOW TO EDIT & EXTEND THIS PAGE
-       ────────────────────────────────────────────────────────────────────
-       QUICK MAP — where things live:
-         • Colours / font / spacing ..... <style> :root  (top of CSS)
-         • Brand ASCII logo ............. search "BRAND LOGO"  (in <body>)
-         • Tab title .................... <title>  (in <head>)
-         • Status bar / footer text ..... search "statusbar" / "footer-line"
-         • Boot animation text .......... JS  "lines" array
-         • Page content ................. <section id="view-NAME"> blocks below
-         • Console commands ............. JS  search "COMMAND REGISTRY"
-         • "chill" easter-egg words ..... JS  EGG array
+.left-stack #banners{width:100%;margin-top:0}.left-stack #banners .banner-space{padding:14px 18px;min-height:0;gap:10px}
+@media(max-width:680px){.left-stack #banners{order:8;width:100%}}
 
-       ── ADD A NEW PAGE (e.g. "music") ─────────────────────────────────
-         1. Copy the PAGE TEMPLATE comment (just below the CREDITS page),
-            uncomment it, set id="view-music" and fill in your content.
-         2. JS: add the name to PAGE_CMDS ......  music:1
-         3. (optional) add a shortcut button inside <nav class="quicklinks">:
-              <button class="ql" type="button" data-cmd="music">music</button>
-         4. (optional) add "music" to COMMAND_NAMES (so ls/Tab know it) and
-            a line in cmdHelp(). Now typing `music` opens that page.
+#setup .setup-specs{grid-template-columns:110px minmax(0,1fr)}
+@media(max-width:380px){#setup .setup-specs{grid-template-columns:95px minmax(0,1fr);column-gap:10px}}
 
-       ── ADD A CONSOLE COMMAND that prints inline (like whoami) ────────
-         1. JS: write a function ....  function cmdFoo(){ append('hi there'); }
-         2. JS: register it in INLINE ....  foo: cmdFoo
-         3. (optional) add 'foo' to COMMAND_NAMES + a line in cmdHelp().
-            (append() takes HTML; use "\n" for line breaks.)
+.setup-content{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.5fr);gap:28px;padding:24px}.setup-group{min-width:0}.setup-group h2{margin:0 0 16px;font-size:var(--type-small);font-weight:normal;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim)}
+#setup .setup-specs{padding:0;grid-template-columns:36px minmax(0,1fr);gap:12px;font-size:var(--type-body)}
+.peripheral-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.device-card{padding:14px 16px;border:1px solid #679b594d;background:#a7df8606}.device-card span{display:block;font-size:var(--type-small);color:var(--dim);margin-bottom:7px}.device-card strong{display:block;font-size:var(--type-body);font-weight:normal;color:var(--text);overflow-wrap:anywhere}
+@media(max-width:850px){.setup-content{grid-template-columns:1fr;gap:24px}}@media(max-width:380px){.setup-content{padding:18px}.peripheral-grid{grid-template-columns:1fr}}
 
-       ── ADD A COMMAND THAT REDIRECTS ──────────────────────────────────
-         • to one of YOUR pages: add an alias in ALIASES, e.g.  rig:'specs'
-           (typing `rig` opens the specs page)
-         • to an EXTERNAL url: add it to REDIRECTS, e.g.
-           github:'https://github.com/you'   (opens in a new browser tab)
+.workspace-content{padding:24px}.workspace-main{display:flex;align-items:flex-start;gap:30px}.workspace-photo{margin:0;flex:0 1 290px;min-width:0;max-width:290px}.workspace-photo img{display:block;width:100%;height:auto;border:1px solid #679b5955;filter:saturate(.8);box-shadow:none}.workspace-photo figcaption{font-size:var(--type-small);color:var(--dim);margin-top:8px}.workspace-peripherals{flex:1;min-width:0}.workspace-peripherals h2{font-size:var(--type-body);font-weight:bold;color:var(--bright);margin:0 0 14px}.workspace-peripherals dl{display:block;margin:0;font-size:var(--type-body)}.workspace-peripherals dl>div{display:grid;grid-template-columns:100px minmax(0,1fr);gap:12px;padding:8px 0;border-bottom:1px solid #679b5930}.workspace-peripherals dl>div:first-child{padding-top:0}.workspace-peripherals dl>div:last-child{border:0}.workspace-peripherals dt{color:var(--dim)}.workspace-peripherals dd{color:var(--text);margin:0;overflow-wrap:anywhere}.workspace-computer{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:24px;padding-top:14px;border-top:1px solid #679b5955;font-size:var(--type-small);color:var(--dim)}.computer-label{color:var(--text)}
+@media(max-width:1000px){.workspace-main{flex-direction:column;gap:22px}.workspace-photo{flex:auto;width:290px;max-width:100%}.workspace-peripherals{width:100%}}
+@media(max-width:680px){.workspace-content{padding:20px}.workspace-main{gap:22px}.workspace-photo{width:270px;align-self:center}.workspace-peripherals dl>div{grid-template-columns:95px minmax(0,1fr);gap:10px}.workspace-computer{gap:7px 14px}}
 
-       Words are matched lowercase. Resolution order when you type a command:
-       ALIASES -> PAGE_CMDS -> REDIRECTS -> home -> INLINE -> "not found".
-       ==================================================================== -->
+/* Variant 2: equipment-led composition, photo as a quiet side note. */
+.workspace-content{padding:26px 30px}
+.workspace-main{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:34px;align-items:center}
+.workspace-peripherals{grid-column:1;grid-row:1;width:auto}
+.workspace-photo{grid-column:2;grid-row:1;width:220px;max-width:220px;align-self:center;transform:rotate(2deg)}
+.workspace-photo img{border:0;outline:1px solid #679b5966;outline-offset:5px}
+.workspace-photo figcaption{margin-top:14px;text-align:right;font-size:var(--type-small)}
+.workspace-peripherals h2{margin:0 0 18px;font-size:var(--type-small);text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);font-weight:normal}
+.workspace-peripherals dl{counter-reset:equipment}
+.workspace-peripherals dl>div{position:relative;display:block;padding:12px 0 12px 34px;border-bottom:1px solid #679b5933;counter-increment:equipment}
+.workspace-peripherals dl>div:first-child{padding-top:0}
+.workspace-peripherals dl>div::before{content:counter(equipment,decimal-leading-zero);position:absolute;left:0;top:14px;font-size:var(--type-small);color:var(--dim)}
+.workspace-peripherals dl>div:first-child::before{top:2px}
+.workspace-peripherals dt{font-size:var(--type-small);line-height:1.4;margin-bottom:4px;color:var(--dim)}
+.workspace-peripherals dd{font-size:18px;line-height:1.35;letter-spacing:.3px;color:var(--bright)}
+.workspace-computer{margin-top:24px;padding-top:16px;font-size:var(--type-small);gap:8px 16px}
+.workspace-computer .computer-label{flex-basis:100%;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);margin-bottom:2px}
+@media(min-width:1500px){.workspace-main{grid-template-columns:minmax(0,1fr) 250px;gap:50px}.workspace-photo{width:250px;max-width:250px}}
+@media(max-width:1000px){.workspace-main{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:24px}.workspace-photo{width:180px;max-width:180px;flex:none}.workspace-peripherals{width:auto}.workspace-content{padding:24px}.workspace-peripherals dd{font-size:var(--type-body)}}
+@media(max-width:680px){.workspace-main{display:flex;flex-direction:column;align-items:stretch;gap:26px}.workspace-peripherals{order:0;width:100%}.workspace-photo{order:1;width:220px;max-width:85%;align-self:center;transform:rotate(1deg)}.workspace-content{padding:22px}.workspace-peripherals dd{font-size:18px}.workspace-computer{margin-top:26px}}
 
-    <!-- CRT atmosphere: delete these two lines to switch off scanlines/vignette -->
-    <div class="scanlines" aria-hidden="true"></div>
-    <div class="vignette" aria-hidden="true"></div>
+/* Variant 3: small centered photo, simple peripheral columns. */
+#setup .workspace-content{padding:24px 28px}
+#setup .workspace-main{display:flex;flex-direction:column;align-items:stretch;gap:28px}
+#setup .workspace-photo{order:0;grid-area:auto;flex:none;width:280px;max-width:100%;align-self:center;transform:none}
+#setup .workspace-photo img{outline:none;border:1px solid #679b5940}
+#setup .workspace-photo figcaption{display:none}
+#setup .workspace-peripherals{order:1;grid-area:auto;width:100%}
+#setup .workspace-peripherals h2{margin:0 0 16px;text-align:left;font-size:var(--type-small);letter-spacing:1.5px}
+#setup .workspace-peripherals dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 32px}
+#setup .workspace-peripherals dl>div,#setup .workspace-peripherals dl>div:first-child{padding:0;border:0;display:block;counter-increment:none}
+#setup .workspace-peripherals dl>div::before{content:none}
+#setup .workspace-peripherals dt{font-size:var(--type-small);margin-bottom:5px;color:var(--dim)}
+#setup .workspace-peripherals dd{font-size:var(--type-body);letter-spacing:0;color:var(--text);line-height:1.6}
+#setup .workspace-computer{display:block;border-top:1px solid #679b5940;margin-top:24px;padding-top:14px;color:var(--dim);font-size:var(--type-small)}
+#setup .workspace-computer summary{cursor:pointer;letter-spacing:0;text-transform:none;color:var(--dim);margin:0;padding:0}
+#setup .workspace-computer>span{display:inline-block;margin:12px 16px 0 0}
+@media(max-width:680px){#setup .workspace-content{padding:22px}#setup .workspace-photo{width:250px}#setup .workspace-peripherals dl{gap:20px 18px}}
 
-    <!-- ===== BOOT OVERLAY ===== -->
-    <div
-      id="boot"
-      role="status"
-      aria-label="System boot sequence, click or press any key to skip"
-    >
-      <span id="boot-skip">[ press any key / tap to skip ]</span>
-      <pre id="boot-log"></pre>
-    </div>
+/* Compact workspace, without a separate photo row. */
+#setup .workspace-content{padding:16px 20px}
+#setup .workspace-main{display:grid;grid-template-columns:200px minmax(0,1fr);align-items:center;gap:20px}
+#setup .workspace-photo{grid-column:1;grid-row:1;width:200px;max-width:100%;align-self:center;margin:0}
+#setup .workspace-peripherals{grid-column:2;grid-row:1;min-width:0}
+#setup .workspace-peripherals h2{margin-bottom:10px}
+#setup .workspace-peripherals dl{gap:10px 18px}
+#setup .workspace-peripherals dt{margin-bottom:1px}
+#setup .workspace-peripherals dd{line-height:1.4}
+#setup .workspace-computer{margin-top:14px;padding-top:10px}
+#setup .workspace-computer>span{margin-top:8px}
+@media(max-width:1000px){#setup .workspace-main{grid-template-columns:160px minmax(0,1fr);gap:16px}#setup .workspace-photo{width:160px}#setup .workspace-peripherals dl{grid-template-columns:1fr;gap:7px}#setup .workspace-peripherals dl>div{display:grid;grid-template-columns:90px minmax(0,1fr);gap:8px}#setup .workspace-peripherals dt{margin:0}}
+@media(max-width:680px){#setup .workspace-content{padding:14px}#setup .workspace-main{grid-template-columns:125px minmax(0,1fr);gap:14px}#setup .workspace-photo{width:125px}#setup .workspace-peripherals h2{margin-bottom:7px}#setup .workspace-peripherals dl{gap:8px}#setup .workspace-peripherals dl>div{display:block}#setup .workspace-peripherals dd{font-size:var(--type-small)}#setup .workspace-computer{margin-top:12px}}
 
-    <!-- ===== MAIN SHELL ===== -->
-    <main class="shell" id="shell" hidden>
-      <header class="statusbar">
-        <div>
-          <span class="node" aria-hidden="true"></span
-          ><span class="sys">LFTQ.OS</span> &nbsp;// &nbsp;v1.2&nbsp; // &nbsp; <br>
-            ㅤ
-        </div>
-        <div class="right">
-          <span class="clock" id="clock" aria-label="system clock"
-            >00:00:00</span
-          >
-          &middot; sys ready
-        </div>
-      </header>
+#setup .workspace-photo img{border:0;outline:0;box-shadow:none}
+#setup .workspace-computer{border-top:0}
+#setup .workspace-peripherals dl>div{border:0}
 
-      <div class="stage">
-        <!-- ============ HOME VIEW = terminal ============ -->
-        <section class="view active" id="view-home" aria-label="terminal">
-          <!-- BRAND LOGO — paste new block art between the <pre> tags (flush-left),
-             keep the <h1> + aria-label in sync. -->
-          <div class="heading-block">
-            <h1 class="vh">laptos</h1>
-            <pre class="ascii-logo glow" role="img" aria-label="laptos">
-██╗      █████╗ ██████╗ ████████╗ ██████╗ ███████╗
+#setup .workspace-computer summary{display:inline-flex;align-items:center;gap:10px;padding:5px 9px;border:1px solid #679b5970;color:var(--text);list-style:none;cursor:pointer;user-select:none}
+#setup .workspace-computer summary::-webkit-details-marker{display:none}
+#setup .workspace-computer summary::before{content:'▸';color:var(--bright)}
+#setup .workspace-computer[open] summary::before{content:'▾'}
+#setup .workspace-computer summary:hover{background:#a2cda412;border-color:var(--bright);color:var(--bright)}
+#setup .workspace-computer summary:focus-visible{outline:2px solid var(--bright);outline-offset:3px}
+
+#setup .workspace-computer summary,#setup .workspace-computer summary:hover{border:0;padding:5px 0;background:none;box-shadow:none}
+#setup .workspace-computer summary:hover{color:var(--bright);text-decoration:underline;text-underline-offset:4px}
+
+#setup .workspace-computer summary:hover{text-decoration:none}
+#setup .workspace-computer summary:hover>span{text-decoration:underline;text-underline-offset:4px}
+#setup .workspace-computer summary::before{text-decoration:none;display:inline-block;width:10px;flex:0 0 10px}
+#setup .workspace-content{padding:14px 18px}
+#setup .workspace-main{grid-template-columns:190px minmax(0,1fr);gap:20px;align-items:center}
+#setup .workspace-photo{width:190px}
+#setup .workspace-peripherals h2{margin:0 0 8px}
+#setup .workspace-peripherals dl{display:grid;grid-template-columns:1fr;gap:5px}
+#setup .workspace-peripherals dl>div,#setup .workspace-peripherals dl>div:first-child{display:grid;grid-template-columns:92px minmax(0,1fr);align-items:baseline;gap:10px;padding:0;margin:0}
+#setup .workspace-peripherals dt{margin:0;line-height:1.5}
+#setup .workspace-peripherals dd{margin:0;line-height:1.5;font-size:var(--type-body)}
+#setup .workspace-computer{margin:10px 0 0;padding:0 0 0 210px}
+#setup .workspace-computer summary{padding:2px 0;gap:5px;line-height:1.5}
+#setup .workspace-computer>span{margin:6px 12px 0 0}
+@media(max-width:1000px){#setup .workspace-main{grid-template-columns:150px minmax(0,1fr);gap:16px}#setup .workspace-photo{width:150px}#setup .workspace-computer{padding-left:166px}#setup .workspace-peripherals dl>div{grid-template-columns:82px minmax(0,1fr);gap:8px}#setup .workspace-peripherals dd{font-size:var(--type-small)}}
+@media(max-width:680px){#setup .workspace-content{padding:12px}#setup .workspace-main{grid-template-columns:115px minmax(0,1fr);gap:12px}#setup .workspace-photo{width:115px}#setup .workspace-peripherals h2{margin-bottom:6px}#setup .workspace-peripherals dl{gap:5px}#setup .workspace-peripherals dl>div{grid-template-columns:1fr;gap:0}#setup .workspace-peripherals dt,#setup .workspace-peripherals dd{line-height:1.35}#setup .workspace-computer{padding-left:0;margin-top:10px}}
+
+#setup .workspace-photo{position:relative;top:-4px}
+
+#setup .workspace-content{display:grid;grid-template-columns:minmax(0,1fr) minmax(205px,.48fr);gap:24px;align-items:start}
+#setup .workspace-main{min-width:0;grid-template-columns:170px minmax(0,1fr);gap:18px}
+#setup .workspace-photo{width:170px}
+#setup .workspace-computer{padding:0;margin:0;min-width:0;border:0}
+#setup .workspace-computer h2{font-size:var(--type-small);font-weight:normal;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);margin:0 0 8px}
+#setup .workspace-computer dl{display:grid;grid-template-columns:1fr;gap:5px;margin:0;font-size:var(--type-body)}
+#setup .workspace-computer dl>div{display:grid;grid-template-columns:36px minmax(0,1fr);gap:10px;align-items:baseline}
+#setup .workspace-computer dt{font-size:var(--type-small);color:var(--dim);line-height:1.5}
+#setup .workspace-computer dd{margin:0;color:var(--text);font-size:var(--type-body);line-height:1.5;overflow-wrap:anywhere}
+@media(max-width:1150px){#setup .workspace-content{grid-template-columns:minmax(0,1fr) minmax(170px,.65fr);gap:20px}#setup .workspace-main{grid-template-columns:1fr;gap:12px}#setup .workspace-photo{width:150px;grid-column:1;grid-row:1;justify-self:start}#setup .workspace-peripherals{grid-column:1;grid-row:2}#setup .workspace-computer dd{font-size:var(--type-small)}}
+@media(max-width:680px){#setup .workspace-content{grid-template-columns:minmax(0,1fr);gap:18px}#setup .workspace-main{grid-template-columns:115px minmax(0,1fr);gap:12px}#setup .workspace-photo{width:115px;grid-column:1;grid-row:1}#setup .workspace-peripherals{grid-column:2;grid-row:1}#setup .workspace-computer{padding:0;margin:0}#setup .workspace-computer dl{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px}#setup .workspace-computer dl>div{grid-template-columns:30px minmax(0,1fr);gap:6px}}
+
+#setup .workspace-content{align-items:center}#setup .workspace-main{align-items:center}#setup .workspace-peripherals,#setup .workspace-computer{align-self:center}
+
+#setup .workspace-content{display:grid;grid-template-columns:170px minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center}
+#setup .workspace-main{display:contents}
+#setup .workspace-photo{grid-column:1;grid-row:1;width:170px;align-self:center;justify-self:start}
+#setup .workspace-peripherals{grid-column:2;grid-row:1;align-self:center}
+#setup .workspace-computer{grid-column:3;grid-row:1;align-self:center;padding:0;margin:0}
+#setup .workspace-peripherals h2,#setup .workspace-computer h2{margin:0 0 8px;line-height:1.6}
+#setup .workspace-peripherals dl,#setup .workspace-computer dl{display:grid;grid-template-columns:1fr;gap:5px}
+#setup .workspace-peripherals dl>div,#setup .workspace-computer dl>div{display:block;min-width:0}
+#setup .workspace-peripherals dt,#setup .workspace-computer dt{font-size:var(--type-small);line-height:1.4;margin:0}
+#setup .workspace-peripherals dd,#setup .workspace-computer dd{font-size:var(--type-body);line-height:1.4;margin:0}
+@media(max-width:1000px){#setup .workspace-content{grid-template-columns:140px minmax(0,1fr) minmax(0,1fr);gap:16px}#setup .workspace-photo{width:140px}#setup .workspace-peripherals dd,#setup .workspace-computer dd{font-size:var(--type-small)}}
+@media(max-width:680px){#setup .workspace-content{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}#setup .workspace-photo{grid-column:1/-1;grid-row:1;width:190px;justify-self:center}#setup .workspace-peripherals{grid-column:1;grid-row:2;align-self:start}#setup .workspace-computer{grid-column:2;grid-row:2;align-self:start}}
+
+#setup .workspace-content{padding:12px;grid-template-columns:170px minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+#setup .workspace-photo{position:static;top:auto;transform:none;align-self:start;justify-self:start;margin:0;width:170px}
+#setup .workspace-peripherals,#setup .workspace-computer{align-self:start;margin:0;padding:0}
+#setup .workspace-peripherals h2,#setup .workspace-computer h2{margin:0 0 6px;line-height:16px}
+#setup .workspace-peripherals dl,#setup .workspace-computer dl{gap:5px;margin:0}
+#setup .workspace-peripherals dl>div,#setup .workspace-peripherals dl>div:first-child,#setup .workspace-computer dl>div{display:grid;grid-template-columns:82px minmax(0,1fr);gap:7px;padding:0;margin:0;align-items:baseline}
+#setup .workspace-computer dl>div{grid-template-columns:30px minmax(0,1fr)}
+#setup .workspace-peripherals dt,#setup .workspace-peripherals dd,#setup .workspace-computer dt,#setup .workspace-computer dd{margin:0;line-height:17px;font-size:var(--type-small)}
+@media(max-width:1000px){#setup .workspace-content{grid-template-columns:130px minmax(0,1fr) minmax(0,1fr);gap:12px}#setup .workspace-photo{width:130px}#setup .workspace-peripherals dl>div,#setup .workspace-peripherals dl>div:first-child{grid-template-columns:1fr;gap:0}}
+@media(max-width:680px){#setup .workspace-content{grid-template-columns:100px minmax(0,1fr);gap:12px}#setup .workspace-photo{grid-column:1;grid-row:1/3;width:100px;justify-self:start;align-self:start}#setup .workspace-peripherals{grid-column:2;grid-row:1}#setup .workspace-computer{grid-column:2;grid-row:2}}
+
+#setup .workspace-content{grid-template-columns:240px minmax(0,1fr) minmax(0,1fr);column-gap:14px;row-gap:12px}
+#setup .workspace-photo{width:240px;max-width:100%}
+#setup .workspace-peripherals dl>div,#setup .workspace-peripherals dl>div:first-child,#setup .workspace-computer dl>div{display:grid;grid-template-columns:1fr;gap:1px;align-items:start}
+#setup .workspace-peripherals dl,#setup .workspace-computer dl{gap:8px}
+#setup .workspace-peripherals dt,#setup .workspace-computer dt{font-size:var(--type-small);line-height:15px;color:var(--dim)}
+#setup .workspace-peripherals dd,#setup .workspace-computer dd{font-size:var(--type-body);line-height:18px;color:var(--text)}
+@media(max-width:1000px){#setup .workspace-content{grid-template-columns:190px minmax(0,1fr) minmax(0,1fr);column-gap:12px}#setup .workspace-photo{width:190px}#setup .workspace-peripherals dd,#setup .workspace-computer dd{font-size:var(--type-small)}}
+@media(max-width:680px){#setup .workspace-content{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 12px}#setup .workspace-photo{grid-column:1/-1;grid-row:1;width:250px;justify-self:start}#setup .workspace-peripherals{grid-column:1;grid-row:2}#setup .workspace-computer{grid-column:2;grid-row:2}}
+
+#setup .workspace-content{padding-top:10px;padding-bottom:10px;row-gap:8px}
+#setup .workspace-peripherals h2,#setup .workspace-computer h2{margin-bottom:4px}
+#setup .workspace-peripherals dl,#setup .workspace-computer dl{gap:4px}
+#setup .workspace-peripherals dl>div,#setup .workspace-peripherals dl>div:first-child,#setup .workspace-computer dl>div{row-gap:0}
+#setup .workspace-peripherals dt,#setup .workspace-computer dt{line-height:14px}
+#setup .workspace-peripherals dd,#setup .workspace-computer dd{line-height:16px}
+
+#setup .workspace-photo{margin-right:16px}
+#setup .workspace-content{grid-template-columns:256px minmax(0,1fr) minmax(0,1fr)}
+@media(max-width:1000px){#setup .workspace-content{grid-template-columns:206px minmax(0,1fr) minmax(0,1fr)}}
+@media(max-width:680px){#setup .workspace-content{grid-template-columns:repeat(2,minmax(0,1fr))}#setup .workspace-photo{margin-right:0;margin-bottom:6px}}
+
+#setup .workspace-content{grid-template-columns:276px minmax(0,1fr) minmax(0,1fr)}
+@media(max-width:1000px){#setup .workspace-content{grid-template-columns:226px minmax(0,1fr) minmax(0,1fr)}}
+@media(max-width:680px){#setup .workspace-content{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.album-cover{display:block;width:100%;height:240px;object-fit:cover;filter:none}.photo:hover .album-cover{filter:brightness(1.08)}.photo .album-label{font-size:var(--type-body);margin-top:10px!important}.photo[href="albums/street.html"] .album-cover{object-position:center 45%}@media(max-width:1000px){.album-cover{height:190px}}@media(max-width:680px){.photos{grid-template-columns:1fr}.album-cover{height:230px}.photo[href="albums/street.html"] .album-cover{object-position:center 40%}}
+
+.photos .photo{position:relative;display:block;padding:8px;border:1px solid #679b5955;background:#a7df8605;cursor:pointer;transition:border-color .16s,background-color .16s,box-shadow .16s,transform .16s}
+.photos .photo::after{content:'Open album ↗';display:block;margin-top:5px;font-size:var(--type-small);color:var(--dim)}
+.photos .photo:hover,.photos .photo:focus-visible{border-color:var(--bright);background:#b5ee8b16;box-shadow:0 0 18px #b6ff7944;transform:translateY(-3px)}
+.photos .photo:hover::after,.photos .photo:focus-visible::after{color:var(--bright)}
+.photos .photo:hover .album-label,.photos .photo:focus-visible .album-label{text-decoration:underline;text-underline-offset:4px}
+@media(prefers-reduced-motion:reduce){.photos .photo{transition:none}.photos .photo:hover,.photos .photo:focus-visible{transform:none}}
+
+.photos .photo{border:0;background:none;box-shadow:none;padding:0}
+.photos .photo:hover,.photos .photo:focus-visible{border:0;background:none;box-shadow:none}
+
+#bio .bio-content{padding:26px 32px 30px;min-height:0}
+#bio .bio-content h1{margin:0 0 4px;font-size:var(--type-heading);letter-spacing:3px;font-weight:bold;line-height:1.3}
+#bio .bio-greeting{font-size:var(--type-small);color:var(--dim);margin:0 0 26px}
+#bio .bio-intro{font-size:var(--type-body);color:var(--text);max-width:780px;margin:0 0 26px;line-height:1.8}
+#bio .bio-caption{font-size:var(--type-small);color:var(--dim);margin:0 0 16px;max-width:none}
+.bio-facts{display:block;margin:0;font-size:var(--type-body)}
+.bio-facts>div{display:grid;grid-template-columns:130px minmax(0,1fr);gap:22px;padding:12px 0;border-bottom:1px solid #679b592c;align-items:baseline}
+.bio-facts>div:last-child{border:0}
+.bio-facts dt{font-size:var(--type-small);letter-spacing:1px;color:var(--dim)}
+.bio-facts dd{font-size:var(--type-body);color:var(--text);margin:0;overflow-wrap:anywhere}
+@media(max-width:680px){#bio .bio-content{padding:22px}.bio-facts>div{grid-template-columns:95px minmax(0,1fr);gap:14px;padding:11px 0}#bio .bio-intro{margin-bottom:22px}}
+
+#bio .bio-content{padding:18px 24px 20px}
+#bio .bio-content h1{margin-bottom:2px}
+#bio .bio-greeting{margin-bottom:14px}
+#bio .bio-intro{margin-bottom:14px;line-height:1.6}
+#bio .bio-caption{margin-bottom:8px}
+.bio-facts>div{padding:7px 0;gap:16px;grid-template-columns:115px minmax(0,1fr)}
+@media(max-width:680px){#bio .bio-content{padding:16px 18px}.bio-facts>div{padding:6px 0;grid-template-columns:90px minmax(0,1fr);gap:10px}#bio .bio-intro{margin-bottom:14px}}
+
+#bio .bio-facts>div{border-bottom:0}
+
+.ascii-banner{display:flex;align-items:center;justify-content:center;padding:20px 24px;overflow:hidden}
+.ascii-banner pre{margin:0;color:var(--bright);font-family:'Courier New',monospace;font-size:clamp(11px,1.5vw,21px);line-height:1.15;white-space:pre;text-shadow:0 0 8px #baff8d88,0 0 24px #aaff7744}
+@media(max-width:680px){.ascii-banner{order:0;width:100%;padding:18px 10px}.ascii-banner pre{font-size:clamp(10px,2.6vw,17px)}}
+
+.ascii-banner{justify-content:flex-start;padding:24px 28px}
+.ascii-banner pre{font-size:clamp(9px,1.25vw,18px);line-height:1.1;text-shadow:0 0 7px #baff8d66}
+@media(max-width:680px){.ascii-banner{padding:18px 12px;justify-content:center}.ascii-banner pre{font-size:clamp(7px,1.9vw,12px)}}
+
+.ascii-banner{justify-content:center;padding:22px 24px}
+.ascii-banner pre{font-size:clamp(11px,1.6vw,23px);line-height:1.15;font-weight:bold;letter-spacing:0;color:var(--bright);text-shadow:0 0 10px #baff8d66}
+@media(max-width:680px){.ascii-banner{padding:18px 10px}.ascii-banner pre{font-size:clamp(9px,2.35vw,15px)}}
+
+.ascii-banner pre{font-family:'Courier New',monospace;font-size:clamp(10px,1.4vw,20px);font-weight:normal;line-height:1.1;letter-spacing:0;font-variant-ligatures:none;text-align:left}
+@media(max-width:680px){.ascii-banner pre{font-size:clamp(8px,2vw,13px)}}
+
+.ascii-banner{justify-content:flex-start;padding:24px 28px}
+.ascii-banner pre{font-size:clamp(9px,1.25vw,18px);font-weight:normal;line-height:1.1;text-shadow:0 0 7px #baff8d66}
+@media(max-width:680px){.ascii-banner{padding:18px 12px;justify-content:center}.ascii-banner pre{font-size:clamp(7px,1.9vw,12px)}}
+
+.ascii-banner{display:block;padding:0;overflow:hidden}
+.identity-content{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px 24px}
+.identity-content pre{flex:0 1 auto;min-width:0;font-size:clamp(8px,1.05vw,16px);line-height:1.1;overflow:hidden}
+.avatar-slot{flex:0 0 104px;width:104px;aspect-ratio:1;border:1px solid #679b5970;background:#a7df8608}
+@media(max-width:1000px){.identity-content{padding:18px;gap:16px}.identity-content pre{font-size:clamp(7px,1.1vw,12px)}.avatar-slot{flex-basis:80px;width:80px}}
+@media(max-width:680px){.ascii-banner{padding:0;display:block}.identity-content{padding:14px 12px;gap:12px}.identity-content pre{font-size:clamp(5px,1.35vw,9px)}.avatar-slot{flex-basis:64px;width:64px}}
+
+.identity-row{display:grid;grid-template-columns:minmax(0,1fr) 144px;gap:16px;align-items:stretch}
+.identity-row .ascii-banner{min-width:0;display:flex;flex-direction:column;padding:0}
+.identity-row .identity-content{flex:1;justify-content:center;padding:18px 14px}
+.identity-row .identity-content pre{font-size:clamp(7px,1vw,16px)}
+.avatar-panel{display:flex;flex-direction:column;min-width:0}
+.avatar-panel .bar{padding-left:14px;padding-right:14px}
+.avatar-panel .avatar-slot{border:0;width:auto;flex:none;aspect-ratio:1;margin:12px;background:#a7df8608}
+@media(max-width:1000px){.identity-row{grid-template-columns:minmax(0,1fr) 116px;gap:12px}.identity-row .identity-content pre{font-size:clamp(6px,.95vw,11px)}.avatar-panel .avatar-slot{margin:8px}}
+@media(max-width:680px){.identity-row{order:0;width:100%;grid-template-columns:minmax(0,1fr) 92px;gap:10px}.identity-row .identity-content{padding:12px 6px}.identity-row .identity-content pre{font-size:clamp(5px,1.25vw,8px)}.avatar-panel .bar{padding-left:10px;padding-right:10px}.avatar-panel .avatar-slot{margin:7px}}
+
+.identity-row .panel>.bar{display:flex;align-items:center;flex:0 0 auto;min-height:38px;padding:10px 18px;margin:0;background:#a7df8612;border-bottom:1px solid #679b5980;color:var(--bright);font-size:var(--type-small);font-weight:bold;line-height:1.6;letter-spacing:1.5px;text-transform:uppercase;text-shadow:0 0 7px #baff8d55}
+
+.identity-row .ascii-banner,.identity-row .avatar-panel{align-items:stretch;justify-content:flex-start}
+.identity-row .panel>.bar{width:100%;align-self:stretch;justify-content:flex-start;box-sizing:border-box}
+
+@media(max-width:680px){
+main .identity-row{order:-2}
+main .left-stack .navigation{order:-1}
+}
+
+.avatar-panel .avatar-slot{display:block;overflow:hidden}.avatar-slot img{display:block;width:100%;height:100%;aspect-ratio:1;object-fit:cover}
+
+.listening-content{display:flex;align-items:center;gap:12px;padding:16px 18px}
+.listening-cover{display:flex;align-items:center;justify-content:center;flex:0 0 58px;width:58px;height:58px;background:#a7df860a;border:1px solid #679b5940;color:var(--dim)}
+.listening-cover span{font-size:24px;line-height:1}
+.listening-track{min-width:0}.listening-track p{margin:0;line-height:1.5;overflow-wrap:anywhere}
+.listening-track .listening-title{font-size:var(--type-body);color:var(--text)}
+.listening-track .listening-artist{font-size:var(--type-small);color:var(--dim);margin-top:2px}
+.listening-status{display:block;font-size:var(--type-small);color:var(--dim);margin-top:7px;line-height:1.4}
+@media(max-width:680px){.left-stack #listening{order:2;width:100%}}
+#fetch-logo[data-host="pc"]{color:#d9858b;text-shadow:0 0 10px #d9858b80,0 0 20px #d9858b35}
+.banner-space{justify-content:center;align-items:center}.banner-space a{display:block;flex:0 0 88px;width:88px;height:31px}.banner-space img{display:block;width:88px;height:31px;image-rendering:pixelated}
+</style><style>
+/* Alternate terminal composition. Original index.html remains untouched. */
+:root{--bg:#050b07;--panel:#0a140d;--line:#52764a;--text:#c0d9b3;--dim:#8aa47e;--bright:#d1f9a1;--type-body:15px;--type-small:12px;--type-heading:30px}
+body{background:var(--bg);color:var(--text);font:15px/1.65 'Courier New',monospace;text-shadow:0 0 7px #b2ff8629}
+body:after{opacity:.38}
+.shell{max-width:1550px;padding:0 28px;margin:26px auto 0;width:100%;min-height:0}
+main{display:grid;grid-template-columns:228px minmax(0,1fr);gap:24px;align-items:start}
+.left-stack{gap:20px}
+main>.stack:not(.right){display:flex;flex-direction:column;gap:24px;grid-column:2}
+.panel{background:var(--panel);border:1px solid var(--line);box-shadow:0 0 16px #9aff7510,inset 0 0 32px #8fff7705}
+.panel>.bar,.identity-row .panel>.bar{min-height:37px;padding:8px 16px;background:#18271a;border-bottom:1px solid #52764a99;color:var(--bright);font:12px/1.6 'Courier New',monospace;font-weight:normal;letter-spacing:0;text-transform:none;text-shadow:0 0 8px #baff8d45;display:flex;align-items:center;justify-content:space-between}
+.panel>.bar:after{content:'−  ×';color:#8aa47e;font-size:12px;letter-spacing:3px;flex-shrink:0;margin-left:15px;opacity:.65}
+#neofetch>.bar:after{display:none}
+.navigation nav{padding:10px 0}
+.navigation a{font-size:14px;padding:10px 18px;line-height:1.6}
+.navigation a:hover{background:#bcf58e0d;text-shadow:0 0 8px #adff9f55}
+.identity-row{grid-template-columns:minmax(0,1fr) 144px;gap:24px}
+.identity-row .identity-content{padding:23px 18px;min-height:140px}
+.identity-row .identity-content pre{font-size:clamp(8px,1.05vw,15px);text-shadow:0 0 7px #baff8d65,0 0 20px #aaff771a}
+.avatar-panel .avatar-slot{margin:12px}
+#bio .bio-content{padding:28px 30px 30px;min-height:0}
+#bio .bio-content h1{font-size:30px;line-height:1.2;letter-spacing:-1px;margin:0 0 22px;color:var(--bright);text-shadow:0 0 9px #baff8d55}
+#bio .bio-intro{font-size:15px;line-height:1.75;max-width:740px;margin:0 0 16px;color:var(--text)}
+#bio .bio-caption{font-size:12px;margin:28px 0 15px;color:var(--dim)}
+.bio-facts{display:grid;grid-template-columns:1fr 1fr;gap:18px 32px}
+.bio-facts>div{display:block;padding:0;border:0}
+.bio-facts dt{font-size:12px;letter-spacing:0;color:var(--dim);line-height:1.5;margin-bottom:4px}
+.bio-facts dd{font-size:14px;line-height:1.5;color:var(--text)}
+.clock-content{padding:16px 18px 18px}
+#local-clock{font-size:29px;letter-spacing:0;line-height:1.3;color:var(--bright);text-shadow:0 0 10px #baff8d60}
+.clock-content small{font-size:11px;color:var(--dim)}
+.listening-content{padding:18px;align-items:flex-start;gap:12px}
+.listening-cover{width:36px;height:42px;flex-basis:36px;background:transparent;border:0;text-shadow:0 0 9px #adff9f66}
+.listening-track .listening-title{font-size:14px}.listening-track .listening-artist,.listening-status{font-size:11px;line-height:1.6}
+.left-stack .link-list{padding:7px 18px}.left-stack .link-list>a{padding:12px 0;border:0;font-size:14px}.link-list small{font-size:11px;margin:0;color:var(--dim)}
+.fetch-toolbar{border:0;padding:0}.fetch-tabs{gap:5px}.fetch-tabs button{padding:4px 13px;font-size:11px;border-color:#52764a80}
+.fetch-tabs button[aria-pressed=true]{background:#d1f9a11c;color:var(--bright);border-color:#95b875;box-shadow:none;text-shadow:0 0 6px #adff9f44}
+.fetch-body{grid-template-columns:190px minmax(0,1fr);gap:28px;padding:28px 30px}
+.fetch-body pre{font-size:10px;line-height:1.15;justify-self:center}
+.fetch-user{font-size:14px;margin-bottom:13px}
+.fetch-info dl{grid-template-columns:70px minmax(0,1fr);font-size:12px;line-height:1.6;gap:5px 16px}
+.fetch-info dt{font-weight:normal;color:var(--dim)}
+.photos{padding:25px;gap:22px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.album-cover{height:230px}.photo .album-label{font-size:14px;margin-top:13px!important}.photos .photo::after{font-size:11px;color:var(--dim)}
+#setup .workspace-content{padding:26px;gap:30px;grid-template-columns:1.4fr 1fr 1fr}
+#setup .workspace-main{display:contents}#setup .workspace-photo{margin:0;width:100%}#setup .workspace-photo img{width:100%;height:180px;object-fit:cover}#setup h2{font-size:14px;letter-spacing:0;margin:0 0 16px}#setup dl>div{margin-bottom:13px}#setup dt{font-size:11px;line-height:1.5}#setup dd{font-size:13px;line-height:1.6}
+.banner-space{padding:20px 14px;gap:10px;justify-content:flex-start}.webring-slots{padding:18px}.webring-placeholder{border:0;background:none;min-height:0;padding:0}.webring-placeholder span{font-size:12px;letter-spacing:0}.webring-placeholder small{font-size:11px}
+@media(min-width:1500px){.shell{padding:0 40px}.identity-row .identity-content pre{font-size:15px}.bio-facts{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:1050px){.shell{padding:0 20px}main{grid-template-columns:195px minmax(0,1fr);gap:20px}.identity-row{gap:20px;grid-template-columns:minmax(0,1fr) 118px}.identity-row .identity-content pre{font-size:8px}.identity-row .identity-content{padding:18px 12px;min-height:115px}.fetch-body{grid-template-columns:130px minmax(0,1fr);padding:22px;gap:20px}.fetch-body pre{font-size:8px}.fetch-info dl{font-size:11px;grid-template-columns:55px minmax(0,1fr)}.photos{padding:20px;gap:16px}.album-cover{height:180px}#setup .workspace-content{grid-template-columns:1fr 1fr;padding:22px}#setup .workspace-photo{grid-column:1/-1}#setup .workspace-photo img{height:260px}}
+@media(max-width:700px){.shell{margin-top:14px;padding:0 14px}main{display:flex;flex-direction:column;gap:18px}.left-stack,main>.stack:not(.right){display:contents}.identity-row{order:0;width:100%;grid-template-columns:minmax(0,1fr) 94px;gap:12px}.identity-row .identity-content{min-height:90px;padding:15px 7px}.identity-row .identity-content pre{font-size:clamp(4px,1.23vw,8px)}.identity-row .panel>.bar{padding:7px 10px}.avatar-panel .avatar-slot{margin:8px}.navigation{order:1;width:100%}.navigation nav{display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:8px}.navigation a{font-size:11px;padding:9px 5px;text-align:center}#bio{order:2;width:100%}#gallery{order:3;width:100%}#neofetch{order:4;width:100%}#setup{order:5;width:100%}#listening{order:6;width:100%}#clock{order:7;width:100%}#links{order:8;width:100%}#webrings{order:9;width:100%}#banners{order:10;width:100%}#bio .bio-content{padding:22px}#bio .bio-content h1{font-size:26px;margin-bottom:18px}#bio .bio-intro{font-size:14px}.bio-facts{grid-template-columns:1fr 1fr;gap:20px}.bio-facts dd{font-size:13px}.bio-facts dt{font-size:11px}.photos{grid-template-columns:1fr;padding:20px;gap:25px}.album-cover{height:280px}.fetch-body{grid-template-columns:85px minmax(0,1fr);gap:15px;padding:22px 15px}.fetch-body pre{font-size:5.5px}.fetch-info dl{font-size:10px;grid-template-columns:45px minmax(0,1fr);gap:5px 9px}.fetch-user{font-size:12px}.fetch-tabs button{padding:4px 9px}#setup .workspace-content{gap:25px 18px}.left-stack .link-list{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}.clock-content{display:flex;justify-content:space-between;align-items:center;gap:15px}.clock-content small{margin:0}}
+</style><style>#fetch-logo[data-host="homelab"]{color:#e7a05b;text-shadow:0 0 10px #e7a05b55}</style><style>
+/* Shared title bars across both columns, including summary and nested spans. */
+html body .shell main .panel > .bar,
+html body .shell main .panel > .bar > span,
+html body .shell main .identity-row .panel > .bar,
+html body .shell main #setup > summary.bar{
+font-family:'Courier New',monospace!important;font-size:12px!important;font-weight:700!important;font-style:normal!important;font-variant:normal!important;line-height:1.6!important;letter-spacing:1px!important;text-transform:uppercase!important;color:#d1f9a1!important;text-shadow:0 0 7px #baff8d45!important;filter:none!important;opacity:1!important}
+html body .shell main .panel > .bar{min-height:37px!important;padding:8px 16px!important;background:#18271a!important;box-shadow:none!important}
+html body .shell main .panel > .bar:after{font:12px/1.6 'Courier New',monospace!important;letter-spacing:3px!important;color:#8aa47e!important;text-shadow:none!important;opacity:.65!important}
+.panel p,.panel dt,.panel dd,.panel small,.panel figcaption,.panel a,.webring-placeholder span{font-family:'Courier New',monospace;text-shadow:0 0 6px #b2ff8629}
+.webring-placeholder span,.webring-placeholder small,.photos .photo::after,#setup figcaption,.listening-track .listening-artist,.listening-status,.link-list small{font-family:'Courier New',monospace;font-size:11px;font-weight:normal;line-height:1.6;letter-spacing:0;color:var(--dim);text-shadow:0 0 6px #b2ff8629}
+#fetch-logo[data-host="homelab"]{color:#e7a05b;text-shadow:0 0 10px #e7a05b55;justify-self:center;align-self:center;margin:0;padding:0;font-size:8px;line-height:1.25;white-space:pre;text-align:left;letter-spacing:0;font-weight:normal}
+@media(max-width:1050px){#fetch-logo[data-host="homelab"]{font-size:6px}}
+@media(max-width:700px){#fetch-logo[data-host="homelab"]{font-size:4px}}
+</style><style>
+/* Common type roles; host output and placeholder components retain their own styles. */
+:root{--font-ui:'Courier New',monospace;--font-body-size:14px;--font-note-size:11px;--glow-body:0 0 6px #b2ff8629;--glow-title:0 0 7px #baff8d45}
+html body .shell main .panel>.bar::after,
+html body .shell main .identity-row .panel>.bar::after,
+html body .shell main #setup>summary.bar::after{content:none!important;display:none!important}
+html body .shell main .panel>.bar,
+html body .shell main .panel>.bar>span,
+html body .shell main .identity-row .panel>.bar,
+html body .shell main #setup>summary.bar{font-family:var(--font-ui)!important;font-size:12px!important;font-weight:700!important;line-height:1.6!important;letter-spacing:1px!important;text-transform:uppercase!important;color:var(--bright)!important;text-shadow:var(--glow-title)!important}
+html body .navigation a,
+html body .left-stack .link-list>a,
+html body #bio .bio-intro,
+html body #bio .bio-facts dd,
+html body .photo .album-label,
+html body #setup dd,
+html body .listening-track .listening-title{font-family:var(--font-ui);font-size:var(--font-body-size);font-weight:400;line-height:1.65;letter-spacing:0;color:var(--text);text-shadow:var(--glow-body)}
+html body #bio .bio-caption,
+html body #bio .bio-facts dt,
+html body .left-stack .link-list small,
+html body .photo::after,
+html body #setup dt,
+html body #setup figcaption,
+html body .listening-track .listening-artist,
+html body .listening-status,
+html body .clock-content small{font-family:var(--font-ui);font-size:var(--font-note-size);font-weight:400;line-height:1.6;letter-spacing:0;color:var(--dim);text-shadow:var(--glow-body)}
+html body #setup h2{font-family:var(--font-ui);font-size:var(--font-body-size);font-weight:700;line-height:1.6;letter-spacing:0;text-transform:none;color:var(--text);text-shadow:var(--glow-body)}
+@media(max-width:700px){html body .navigation a{font-size:11px}}
+</style><style>.listening-cover{flex:0 0 58px;width:58px;height:58px;overflow:hidden;align-items:center}.listening-cover img{display:block;width:58px;height:58px;object-fit:cover}.listening-link{display:block;text-decoration:none}.listening-link:hover .listening-title{text-decoration:underline;text-underline-offset:3px}</style><style>
+html body #listening .listening-status{display:block;margin-top:10px;font-family:var(--font-ui,'Courier New',monospace);font-size:13px;font-weight:700;line-height:1.5;letter-spacing:0;color:var(--bright);text-shadow:0 0 8px #baff8d55}
+</style><style>
+/* Compact listening widget. */
+html body #listening .listening-content{padding:12px 14px;gap:10px;align-items:center}
+html body #listening .listening-cover{flex:0 0 52px;width:52px;height:52px}
+html body #listening .listening-cover img{width:52px;height:52px;object-fit:cover}
+html body #listening .listening-track p{margin:0;line-height:1.35}
+html body #listening .listening-track .listening-artist{margin-top:2px;line-height:1.35}
+html body #listening .listening-status{margin-top:5px;font-size:12px;line-height:1.35}
+</style><body><div class="shell"><main><aside class="left-stack"><aside class="panel navigation"><div class="bar">Navigation</div><nav aria-label="Site navigation"><a href="#bio">Bio</a><a href="#listening">Listening</a><a href="#links">Links</a><a href="#neofetch">Neofetch</a><a href="#gallery">Photos</a><a href="#setup">Workspace</a><a href="#webrings">Webrings</a><a href="#banners">Banners</a></nav></aside><article class="panel" id="clock"><div class="bar">Time</div><div class="clock-content"><time aria-label="Moscow time" id="local-clock"></time><small>Europe / Moscow</small></div></article><article class="panel" id="listening"><div class="bar">Listening</div><div class="listening-content"><div aria-hidden="true" class="listening-cover"><span>♪</span></div><div class="listening-track"><p class="listening-title">Quiet for now</p><p class="listening-artist">Your track will appear here</p><span class="listening-status">Last.fm not connected yet</span></div></div></article><article class="panel" id="links"><div class="bar"><span>Links</span></div><div class="link-list"><a href="https://t.me/laftik" rel="noopener" target="_blank"><span>telegram<small>@laftik</small></span></a><a href="https://t.me/laftiq" rel="noopener" target="_blank"><span>tg channel<small>lftq's photos</small></span></a><a href="https://github.com/laftiq" rel="noopener" target="_blank"><span>github<small>@laftiq</small></span></a><a href="https://discord.com/users/698974920314454026" rel="noopener" target="_blank"><span>discord<small>@laftq</small></span></a><a href="https://www.instagram.com/lapt0s/" rel="noopener" target="_blank"><span>insta<small>@lapt0s</small></span></a><a href="https://vk.com/laftiq" rel="noopener" target="_blank"><span>vk<small>@laftiq</small></span></a><a href="https://steamcommunity.com/id/laftq/" rel="noopener" target="_blank"><span>steam<small>@laftq</small></span></a></div></article><article class="panel" id="webrings"><div class="bar"><span>Webrings</span></div><div class="webring-slots"><div class="webring-placeholder"><span>WEBRING</span><small>coming soon</small></div></div></article><article class="panel" id="banners"><div class="bar">Stuff I Like</div><div class="banner-space"><a href="https://belomaxorka.dev" rel="noopener noreferrer" target="_blank"><img alt="belomaxorka" height="31" loading="lazy" src="https://belomaxorka.dev/88x31/terminal.gif" width="88"/></a><a href="https://tei.pet" rel="noopener noreferrer" target="_blank"><img alt="alina teidesu" height="31" loading="lazy" src="https://tei.pet/88x31/teidesu.png" width="88"/></a><a href="https://asyasocute.online" rel="noopener noreferrer" target="_blank"><img alt="cowl rainszn’s cowl badge" height="31" loading="lazy" src="https://asyasocute.online/badges/cowl.png" width="88"/></a><a aria-label="Debian — the universal operating system" class="debian-banner" href="https://www.debian.org/" rel="noopener noreferrer" target="_blank"><svg aria-label="Debian" height="31" role="img" viewbox="0 0 88 31" width="88" xmlns="http://www.w3.org/2000/svg"><rect fill="#160c11" height="30" stroke="#b86b7a" width="87" x=".5" y=".5"></rect><path d="M15 17c6 1 9-3 7-7-2-5-10-5-13 0-4 7 1 14 8 16M15 17c-4-1-4-6 0-7 3-1 5 2 3 4" fill="none" stroke="#df8196" stroke-linecap="round" stroke-width="1.5"></path><text fill="#f2cbd3" font-family="monospace" font-size="12" font-weight="bold" x="28" y="18">debian</text><text fill="#bd8e99" font-family="monospace" font-size="4.5" x="29" y="26">THE UNIVERSAL OS</text></svg></a></div></article></aside><section class="stack"><div class="identity-row"><section aria-label="LAPTOS" class="panel ascii-banner"><div class="bar">laptos@home: ~</div><div class="identity-content"><pre aria-hidden="true">██╗      █████╗ ██████╗ ████████╗ ██████╗ ███████╗
 ██║     ██╔══██╗██╔══██╗╚══██╔══╝██╔═══██╗██╔════╝
 ██║     ███████║██████╔╝   ██║   ██║   ██║███████╗
 ██║     ██╔══██║██╔═══╝    ██║   ██║   ██║╚════██║
 ███████╗██║  ██║██║        ██║   ╚██████╔╝███████║
-╚══════╝╚═╝  ╚═╝╚═╝        ╚═╝    ╚═════╝ ╚══════╝</pre
-            >
-            <span class="crumb"
-              ></span
-            >
-          </div>
-
-          <hr class="rule" />
-
-          <!-- MODULE BUTTONS — shortcuts that just run a command (data-cmd).
-             Add one:  <button class="ql" type="button" data-cmd="WORD">label</button>
-             data-cmd can be any command (a page, an inline cmd, a redirect…). -->
-          <nav class="quicklinks" aria-label="modules">
-            <button class="ql" type="button" data-cmd="about">about</button>
-            <button class="ql" type="button" data-cmd="contacts">
-              contacts
-            </button>
-            <button class="ql" type="button" data-cmd="specs">specs</button>
-            <button class="ql" type="button" data-cmd="credits">credits</button>
-            <button class="ql" type="button" data-cmd="help">help</button>
-          </nav>
-
-          <!-- TERMINAL (no border) -->
-          <div class="terminal" id="terminal">
-            <div class="term-out" id="term-out" aria-live="polite"></div>
-            <form
-              class="term-line"
-              id="cmdline"
-              autocomplete="off"
-              aria-label="Terminal command line"
-            >
-              <span class="prompt">laft@laptos:~$</span>
-              <span class="cmd-field" id="cmd-field">
-                <input
-                  id="cmd"
-                  name="cmd"
-                  type="text"
-                  spellcheck="false"
-                  autocapitalize="off"
-                  autocorrect="off"
-                  aria-label="Terminal command input"
-                />
-                <span class="fakecaret" aria-hidden="true"></span>
-              </span>
-            </form>
-          </div>
-        </section>
-
-        <!-- ============ CONTENT PAGES ============
-           Each page is a <section class="view" id="view-NAME">. Only one view
-           is shown at a time; the home/terminal view is also one of these.
-           To add a page, copy the PAGE TEMPLATE comment after the CREDITS page. -->
-
-        <!-- ============ ABOUT PAGE ============ -->
-        <section
-          class="view"
-          id="view-about"
-          aria-label="About"
-          aria-hidden="true"
-        >
-          <div class="page-head">
-            <button class="back-btn" type="button" data-home>
-              <span class="ar">&lsaquo;</span>back to terminal<br>
-               ㅤ
-            </button>
-          </div>
-          <p class="page-eyebrow">// module 01</p>
-          <h2 class="page-title glow">about</h2>
-          <p class="page-sub">hiii yo</p>
-          <div class="page-body">
-            <p class="lede">
-              i am borya aka <strong>laft</strong> aka laptos &#9752; &mdash;
-              not developer and not designer, i'm just
-              <span
-                class="egg-word"
-                role="button"
-                tabindex="0"
-                title="click to reroll"
-                >nerd</span
-              >
-              &mdash; so idk why i made this site
-            </p>
-            <p class="page-sub">// rlly (or not) interesting things bout me //</p>
-            <dl class="data">
-              <dt>bday</dt>
-              <dd>06 // 11 // 2026</dd>
-              <dt>cntry</dt>
-              <dd>russia // &#127479;&#127482;</dd>
-              <dt>fav music</dt>
-              <dd>rap, breakcore, any EDM</dd>
-              <dt>fav tv shows</dt>
-              <dd>rik and morty, breaking bad</dd>
-              <dt>hobbies</dt>
-              <dd>drums, guitar, any other cool stuff</dd>
-              <dt>fav games</dt>
-              <dd>dota, hollow knight, ghost of tsushima</dd>
-            </dl>
-          </div>
-        </section>
-
-        <!-- ============ CONTACTS PAGE ============ -->
-        <section
-          class="view"
-          id="view-contacts"
-          aria-label="Contacts"
-          aria-hidden="true"
-        >
-          <div class="page-head">
-            <button class="back-btn" type="button" data-home>
-              <span class="ar">&lsaquo;</span>back to terminal<br>
-               ㅤ
-            </button>
-          </div>
-          <p class="page-eyebrow">// module 02</p>
-          <h2 class="page-title glow">contacts</h2>
-          <p class="page-sub">where u can find me</p>
-          <div class="page-body">
-            <dl class="data">
-              <dt>telegram</dt>
-              <dd>
-                <a
-                  class="lnk"
-                  href="https://t.me/laftik"
-                  target="_blank"
-                  rel="noopener"
-                  >@laftik</a
-                >
-                   
-              </dd>
-              <dt>tg channel</dt>
-              <dd>
-                <a
-                  class="lnk"
-                  href="https://t.me/laftiq"
-                  target="_blank"
-                  rel="noopener"
-                  >lftq's photos</a
-                >
-              <dt>github</dt>
-              <dd>
-                <a
-                  class="lnk"
-                  href="https://github.com/laftiq"
-                  target="_blank"
-                  rel="noopener"
-                  >@laftiq</a
-                >     
-              <dt>discord</dt>
-              <dd>
-                <a
-                  class="lnk"
-                  href="https://discord.com/users/698974920314454026"
-                  target="_blank"
-                  rel="noopener"
-                  >@laftq</a
-                >
-              </dd>
-              <dt>insta</dt>
-              <dd>
-                <a
-                  class="lnk"
-                  href="https://www.instagram.com/lapt0s/"
-                  target="_blank"
-                  rel="noopener"
-                  >@lapt0s</a
-                >
-              <dt>vk</dt>
-              <dd>
-                <a
-                  class="lnk"
-                  href="https://vk.com/laftiq"
-                  target="_blank"
-                  rel="noopener"
-                  >@laftiq</a
-                >
-              <dt>steam</dt>
-               <dd>
-                <a
-                  class="lnk"
-                  href="https://steamcommunity.com/id/laftq/"
-                  target="_blank"
-                  rel="noopener"
-                  >@laftq</a
-                >
-            </dl>
-          </div>
-        </section>
-
-        <!-- ============ SPECS PAGE ============ -->
-        <section
-          class="view"
-          id="view-specs"
-          aria-label="Specs"
-          aria-hidden="true"
-        >
-          <div class="page-head">
-            <button class="back-btn" type="button" data-home>
-              <span class="ar">&lsaquo;</span>back to terminal<br>
-               ㅤ
-            </button>
-          </div>
-          <p class="page-eyebrow">// module 03</p>
-          <h2 class="page-title glow">specs</h2>
-          <p class="page-sub">my PC spec</p>
-          <div class="page-body">
-            <dl class="data">
-              <dt>gpu</dt>
-              <dd>4070ti gigabyte eagle</dd>
-              <dt>cpu</dt>
-              <dd>ryzen 5 5600x</dd>
-              <dt>ram</dt>
-              <dd>16gb </dd>
-              <dt>monitor</dt>
-              <dd>AOC 24" 144hz</dd>
-              <dt>keyboard</dt>
-              <dd>DP k78a</dd>
-              <dt>mice</dt>
-              <dd>mchose ax5pro</dd>
-              <dt>audio</dt>
-              <dd>minifuse1 + steelseries arctis 9</dd>
-            </dl>
-          </div>
-        </section>
-
-        <!-- ============ CREDITS PAGE ============ -->
-        <section
-          class="view"
-          id="view-credits"
-          aria-label="Credits"
-          aria-hidden="true"
-        >
-          <div class="page-head">
-            <button class="back-btn" type="button" data-home>
-              <span class="ar">&lsaquo;</span>back to terminal <br>
-               ㅤ
-            </button>
-          </div>
-          <p class="page-eyebrow">// module 04</p>
-          <h2 class="page-title glow">credits</h2>
-          <div class="page-body">
-            <p class="credits-body">
-              this whole terminal was hacked together with
-              <a
-                class="lnk"
-                href="https://claude.com/claude-code"
-                target="_blank"
-                rel="noopener"
-                >claude</a
-              >
-              &mdash; anthropic's ai &mdash; pair-programming it with me line by
-              line.
-            </p>
-            <p class="credits-body">
-              it wrote the boot sequence, the command parser and this very page,
-              and survived a LOT of "сделай по-другому". no humans were harmed,
-              only refactored. =)
-            </p>
-            <p class="credits-meta">// built by laft &times; claude</p>
-            <p class="credits-note">
-              // (psst &mdash; this credits text was written by claude itself)
-            </p>
-          </div>
-        </section>
-
-        <!-- ============ PAGE TEMPLATE (copy me to add a page) ============
-           Steps: (1) copy the <section> below OUT of this comment;
-                  (2) rename id="view-NAME" (NAME = lowercase, no spaces);
-                  (3) JS: add  NAME:1  to PAGE_CMDS;
-                  (4) optional: a quicklinks button + COMMAND_NAMES/help entry.
-           Use <dl class="data"> rows for label/value lists, or <p class="lede">
-           for prose. Links: <a class="lnk" href="..." target="_blank" rel="noopener">.
-
-      <section class="view" id="view-NAME" aria-label="NAME" aria-hidden="true">
-        <div class="page-head"><button class="back-btn" type="button" data-home><span class="ar">&lsaquo;</span>back to terminal</button></div>
-        <p class="page-eyebrow">// module 0X</p>
-        <h2 class="page-title glow">NAME</h2>
-        <p class="page-sub">a short subtitle</p>
-        <div class="page-body">
-          <p class="lede">your intro text goes here</p>
-          <dl class="data">
-            <dt>label</dt> <dd>value</dd>
-            <dt>label</dt> <dd>value</dd>
-          </dl>
-        </div>
-      </section>
-
-      ============================================================= -->
-      </div>
-
-      <!-- bottom footer — EDIT both labels freely -->
-      <footer class="footer-line">
-        <span>lftq // laftiq // laft</span>
-        <span>&copy; 2026 &middot; launch mode</span>
-      </footer>
-    </main>
-
-    <!-- no-JS fallback: terminal needs JS, so show a plain static bio -->
-    <noscript>
-      <style>
-        #boot {
-          display: none !important;
-        }
-        #shell[hidden] {
-          display: flex !important;
-        }
-        .terminal,
-        .quicklinks {
-          display: none !important;
-        }
-        .view {
-          display: flex !important;
-        } /* show all sections stacked */
-        .back-btn,
-        .page-eyebrow {
-          display: none !important;
-        }
-      </style>
-    </noscript>
-
-    <script>
-      (function () {
-        "use strict";
-        var reduce =
-          window.matchMedia &&
-          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-        function escapeHtml(s) {
-          return String(s)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;");
-        }
-
-        /* ======================= BOOT SEQUENCE ======================= */
-        var bootEl = document.getElementById("boot");
-        var bootLog = document.getElementById("boot-log");
-        var shell = document.getElementById("shell");
-        var bootDone = false,
-          bootTimer = null,
-          safetyTimer = null;
-
-        /* BOOT LOG TEXT — edit freely. "@" prefix = fully highlighted line;
-     ok / loaded / breakcore auto-highlight. */
-        var lines = [
-          "LFTQ.OS  //  cold boot",
-          "> mounting /dev/laptos .......... ok",
-          "> identity: laft / laftiq / laptos",
-          "> hardware: 4070ti / 5600x / 16gb",
-          "> audio link: minifuse1 ........ ok",
-          "> calibrating ambient mood .... breakcore activated",
-          "> personality module [nerd] ... loaded",
-          "@entering LAUNCH MODE",
-        ];
-        function highlightBoot(s) {
-          if (s.charAt(0) === "@") {
-            return '<span class="hot">' + escapeHtml(s.slice(1)) + "</span>";
-          }
-          return escapeHtml(s).replace(
-            /\b(ok|loaded|breakcore)\b/g,
-            '<span class="ok">$1</span>',
-          );
-        }
-        function finishBoot() {
-          if (bootDone) return;
-          bootDone = true;
-          if (bootTimer) clearTimeout(bootTimer);
-          if (safetyTimer) clearTimeout(safetyTimer);
-          bootEl.classList.add("gone");
-          shell.hidden = false;
-          setTimeout(function () {
-            if (bootEl && bootEl.parentNode)
-              bootEl.parentNode.removeChild(bootEl);
-          }, 520);
-          initApp();
-        }
-        bootEl.addEventListener("click", finishBoot, false);
-        bootEl.addEventListener(
-          "touchstart",
-          function () {
-            finishBoot();
-          },
-          { passive: true },
-        );
-        window.addEventListener(
-          "keydown",
-          function skip() {
-            if (!bootDone) {
-              finishBoot();
-            }
-            window.removeEventListener("keydown", skip);
-          },
-          false,
-        );
-
-        if (reduce) {
-          bootLog.innerHTML = lines.map(highlightBoot).join("\n");
-          setTimeout(finishBoot, 420);
-        } else {
-          var bi = 0,
-            ci = 0,
-            acc = "";
-          (function type() {
-            if (bootDone) return;
-            if (bi >= lines.length) {
-              bootTimer = setTimeout(finishBoot, 340);
-              return;
-            }
-            var line = lines[bi];
-            if (ci < line.length) {
-              ci++;
-              bootLog.innerHTML = highlightBoot(acc + line.slice(0, ci));
-              bootTimer = setTimeout(type, 7 + Math.random() * 8);
-            } else {
-              acc += line + "\n";
-              bi++;
-              ci = 0;
-              bootTimer = setTimeout(type, 58);
-            }
-          })();
-          safetyTimer = setTimeout(finishBoot, 4500);
-        }
-
-        /* ======================= LIVE CLOCK ======================= */
-        var clockEl = document.getElementById("clock");
-        function pad(n) {
-          return (n < 10 ? "0" : "") + n;
-        }
-        function tickClock() {
-          if (!clockEl) return;
-          var d = new Date();
-          var t =
-            pad(d.getHours()) +
-            ":" +
-            pad(d.getMinutes()) +
-            ":" +
-            pad(d.getSeconds());
-          if (clockEl.firstChild && clockEl.firstChild.nodeType === 3) {
-            clockEl.firstChild.nodeValue = t;
-          } else {
-            clockEl.textContent = t;
-          }
-        }
-        tickClock();
-        setInterval(tickClock, 1000);
-
-        /* ======================= TERMINAL + VIEWS ======================= */
-        var inited = false;
-        var outEl, cmdInput, fieldEl, isCoarse;
-        var currentView = "home";
-        var PROMPT = "laft@laptos:~$";
-        var cmdHistory = [],
-          histPos = 0,
-          draft = "";
-
-        /* EASTER-EGG WORDS — the printed "chill" word (about page) rerolls on click */
-        var EGG = [
-          "nerd",
-          "chud",
-          "larper",
-          "guitarist",
-          "drummer",
-          "phyisic enjoyer",
-        ];
-
-        /* ============================ COMMAND REGISTRY ============================
-     What the console understands lives in the four maps below. To add a
-     command you usually only touch ONE of them (see HOW TO EXTEND, top of file):
-
-       PAGE_CMDS   word -> opens the page  <section id="view-WORD">
-       REDIRECTS   word -> opens an external URL in a new tab
-       INLINE      word -> runs a function that prints into the terminal
-       ALIASES     extra word -> an existing command (synonyms / shortcuts)
-
-     COMMAND_NAMES is just the discovery list used by `ls` and Tab-complete.
-     (INLINE itself is defined lower down, next to the command functions.)
-     ======================================================================== */
-
-        /* (1) MODULE commands — each opens its matching <section id="view-NAME"> page.
-         Add a page -> add  NAME:1  here (and create the <section> in the markup). */
-        var PAGE_CMDS = { about: 1, contacts: 1, specs: 1, credits: 1 };
-
-        /* (2) REDIRECT commands — typing the word opens that URL in a new tab.
-         Add one like:   github:'https://github.com/you',  yt:'https://youtu.be/...'
-         (uncomment the example to try it). */
-        var REDIRECTS = {
-          // github: 'https://github.com/your-name',
-        };
-
-        /* (3) ALIASES — an extra word that maps onto a real command.
-         e.g. rig:'specs' opens the specs page; '?':'help' runs help.
-         Aliases are resolved FIRST, so they work for pages, redirects, inline. */
-        var ALIASES = {
-          "?": "help",
-          man: "help",
-          commands: "help",   
-          info: "about",
-          me: "about",
-          bio: "about",
-          contact: "contacts",
-          links: "contacts",
-          find: "contacts",
-          pc: "specs",
-          rig: "specs",
-          hardware: "specs",
-          spec: "specs",
-          neofetch: "specs",
-          thanks: "credits",
-          credit: "credits",
-          cls: "clear",
-          back: "home",
-          exit: "home",
-          "..": "home",
-          menu: "home",
-        };
-
-        /* (4) names shown by `ls` and completed with Tab. Add your new command here
-         so it's discoverable (cosmetic only — the command works regardless). */
-        var COMMAND_NAMES = [
-          "about",
-          "contacts",
-          "specs",
-          "credits",
-          "help",
-          "whoami",
-          "ls",
-          "cd",
-          "cat",
-          "clear",
-          "sl",
-          "cowsay",
-        ];
-
-        /* Tab-completion candidates for a command's ARGUMENT (the 2nd word).
-           cd takes module / dir names; cat takes the full file names from `ls`. */
-        var ARG_COMPLETIONS = {
-          cd: ["about", "contacts", "specs", "credits", ".."],
-          cat: ["about.txt", "contacts.md", "specs.cfg", "credits.log"],
-        };
-
-        function viewEl(name) {
-          return document.getElementById("view-" + name);
-        }
-
-        /* ---------- view switching ----------
-     Shows exactly one <section class="view"> (id="view-"+name), hides the rest,
-     plays the fade, moves focus, and updates the URL hash (#about, etc.) so the
-     page is deep-linkable. 'home' is the terminal view. */
-        function showView(name) {
-          var to = viewEl(name);
-          if (!to || name === currentView) return;
-          var vs = document.querySelectorAll(".view");
-          for (var i = 0; i < vs.length; i++) {
-            vs[i].classList.remove("active", "enter");
-            vs[i].setAttribute("aria-hidden", "true");
-          }
-          to.classList.add("active");
-          to.setAttribute("aria-hidden", "false");
-          void to.offsetWidth;
-          if (!reduce) to.classList.add("enter");
-          currentView = name;
-
-          if (name === "home") {
-            focusCmd();
-          } else {
-            var b = to.querySelector(".back-btn");
-            if (b) {
-              try {
-                b.focus({ preventScroll: true });
-              } catch (e) {}
-            }
-          }
-
-          try {
-            history.replaceState(
-              null,
-              "",
-              name === "home"
-                ? location.pathname + location.search
-                : "#" + name,
-            );
-          } catch (e) {}
-        }
-        function goHome() {
-          showView("home");
-        }
-
-        /* ---------- terminal output ---------- */
-        function termScroll() {
-          if (outEl) {
-            outEl.scrollTop = outEl.scrollHeight;
-          }
-        }
-        function append(html, cls) {
-          var el = document.createElement("div");
-          el.className = "term-block" + (cls ? " " + cls : "");
-          el.innerHTML = html;
-          outEl.appendChild(el);
-          termScroll();
-          return el;
-        }
-        function echo(raw) {
-          append(
-            '<span class="prompt">' +
-              escapeHtml(PROMPT) +
-              "</span> " +
-              escapeHtml(raw),
-            "term-echo",
-          );
-        }
-
-        /* ---------- INLINE (utility) command functions ----------
-     Each prints into the terminal via append(htmlString).
-       • append() inserts HTML — escape user/dynamic text with escapeHtml().
-       • use "\n" for line breaks (the output area is white-space:pre-wrap).
-       • wrap labels in <span class="term-key">…</span> for the dim accent.
-     After writing a function, register it in the INLINE map below. */
-        function cmdHelp() {
-          append(
-            "laptos 1.0 (borya / amd64)\n" +
-              "usage: &lt;command&gt; [args]\n" +
-              "\n" +
-              "a personal bio, served as a fake linux terminal.\n" +
-              "\n" +
-              "modules (open their own page):\n" +
-              '  <span class="term-key">about</span>      who i am + a few facts\n' +
-              '  <span class="term-key">contacts</span>   where you can find me\n' +
-              '  <span class="term-key">specs</span>      my pc\n' +
-              '  <span class="term-key">credits</span>    thanks &amp; credits\n' +
-              "\n" +
-              "utility commands (run here):\n" +
-              '  <span class="term-key">help</span>       show this help\n' +
-              '  <span class="term-key">source</span>     opens my github page\n' +
-              '  <span class="term-key">whoami</span>     info about you (your browser / os)\n' +
-              '  <span class="term-key">ls</span>         list files\n' +
-              '  <span class="term-key">cd</span>         change directory (cd specs, cd ..)\n' +
-              '  <span class="term-key">cat</span>        open a file (cat about.txt)\n' +
-              '  <span class="term-key">clear</span>      clear the screen\n' +
-              '  <span class="term-key">cowsay</span>     a cow says your text\n' +
-              '  <span class="term-key">sl</span>         ?\n' +
-              "\n" +
-              "tip: just start typing &mdash; keystrokes land here. " +
-              "&uarr;/&darr; history &middot; tab autocomplete &middot; ctrl+l clear",
-          );
-        }
-        /* whoami — a playful "who is this client" readout from the browser */
-        function cmdWhoami() {
-          var ua = navigator.userAgent || "";
-          var os = /Windows/.test(ua)
-            ? "Windows"
-            : /Android/.test(ua)
-              ? "Android"
-              : /iPhone|iPad|iPod/.test(ua)
-                ? "iOS"
-                : /Mac OS X|Macintosh/.test(ua)
-                  ? "macOS"
-                  : /Linux/.test(ua)
-                    ? "Linux"
-                    : "unknown";
-          var br = /Edg\//.test(ua)
-            ? "Edge"
-            : /OPR\/|Opera/.test(ua)
-              ? "Opera"
-              : /Firefox\//.test(ua)
-                ? "Firefox"
-                : /Chrome\//.test(ua)
-                  ? "Chrome"
-                  : /Safari\//.test(ua)
-                    ? "Safari"
-                    : "unknown";
-          var tz = "";
-          try {
-            tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
-          } catch (e) {}
-          var touch =
-            "ontouchstart" in window || navigator.maxTouchPoints > 0
-              ? "yes"
-              : "no";
-          var rows = [
-            ["user", "guest@laptos (you)"],
-            ["client", br + " on " + os],
-            [
-              "screen",
-              screen.width +
-                " x " +
-                screen.height +
-                "  ·  viewport " +
-                window.innerWidth +
-                " x " +
-                window.innerHeight,
-            ],
-            ["lang", (navigator.language || "?") + (tz ? "  ·  " + tz : "")],
-            [
-              "cores",
-              (navigator.hardwareConcurrency || "?") +
-                " logical  ·  touch " +
-                touch,
-            ],
-          ];
-          append(
-            rows
-              .map(function (r) {
-                return (
-                  '<span class="term-key">' +
-                  r[0] +
-                  "</span>   " +
-                  escapeHtml(r[1])
-                );
-              })
-              .join("\n"),
-          );
-        }
-
-        /* ls — a fake directory listing; `ls -a` reveals the hidden stuff */
-        function cmdLs(args) {
-          var all = (args || []).join("").indexOf("a") !== -1;
-          var files =
-            "about.txt   contacts.md   specs.cfg   credits.log   secrets/";
-          if (all) {
-            append(
-              ".            ..            .bash_history   .secret\n" +
-                files +
-                '\n<span class="term-key">// nothing in secrets/ ... or is there 👀</span>',
-            );
-          } else {
-            append(files);
-          }
-        }
-
-        /* cd — into a real module opens its page; silly dirs get a silly answer */
-        function cmdCd(args) {
-          var dest = (args && args[0] ? args[0] : "")
-            .toLowerCase()
-            .replace(/\/+$/, "");
-          /* home-ish targets -> back to the terminal */
-          if (
-            !dest ||
-            dest === "~" ||
-            dest === "/" ||
-            dest === "." ||
-            dest === ".." ||
-            dest === "home"
-          ) {
-            goHome();
-            return;
-          }
-          /* the locked dir + hidden secret (from `ls` / `ls -a`) */
-          if (dest === "secrets" || dest === ".secret") {
-              append(
-                '<span class="term-err">cd: ' +
-                  escapeHtml(dest) +
-                  ": permission denied 🔒</span>",
-              );
-              return;
-          }
-          
-          /* the "files" that `ls` lists aren't directories — nudge to the module */
-          var FILES = {
-            "about.txt": "about",
-            "contacts.md": "contacts",
-            "specs.cfg": "specs",
-            "credits.log": "credits",
-          };
-          if (FILES[dest]) {
-            append(
-              '<span class="term-err">cd: ' +
-                escapeHtml(dest) +
-                ": Not a directory</span>\nit's a file — try <span class=\"term-key\">cd " +
-                FILES[dest] +
-                "</span>",
-            );
-            return;
-          }
-          if (dest === ".bash_history") {
-            append(
-              '<span class="term-err">cd: ' +
-                escapeHtml(dest) +
-                ": Not a directory</span>",
-            );
-            return;
-          }
-          /* a real module name opens its page */
-          var d = ALIASES[dest] || dest;
-          if (PAGE_CMDS[d]) {
-            showView(d);
-            return;
-          }
-          append(
-            '<span class="term-err">cd: ' +
-              escapeHtml(dest) +
-              ": No such file or directory</span>",
-          );
-        }
-
-        function cmdClear() {
-          outEl.innerHTML = "";
-        }
-
-        /* cat <file> — like cd, but opens a module by its FULL file name
-           (the names `ls` shows). cat about.txt -> about page, etc. */
-        function cmdCat(args) {
-          var FILES = {
-            "about.txt": "about",
-            "contacts.md": "contacts",
-            "specs.cfg": "specs",
-            "credits.log": "credits",
-          };
-          var name = (args && args[0] ? args[0] : "")
-            .toLowerCase()
-            .replace(/\/+$/, "");
-          if (!name) {
-            append(
-              '<span class="term-err">cat: missing file</span>\nusage: <span class="term-key">cat about.txt</span>  (contacts.md / specs.cfg / credits.log)',
-            );
-            return;
-          }
-          if (FILES[name]) {
-            showView(FILES[name]);
-            return;
-          }
-          if (name === ".bash_history") {
-            /* easter egg: a fake shell history */
-            append("whoami\nls\ncd specs\nsl\ncowsay hi\ncat about.txt\nhelp");
-            return;
-          }
-          if (name === "secrets" || name === ".secret") {
-            append(
-              '<span class="term-err">cat: ' +
-                escapeHtml(name) +
-                ": permission denied 🔒</span>",
-            );
-            return;
-          }
-          /* a bare module name -> remind to type the full file name */
-          var bare = {
-            about: "about.txt",
-            contacts: "contacts.md",
-            specs: "specs.cfg",
-            credits: "credits.log",
-          };
-          var b = bare[ALIASES[name] || name];
-          if (b) {
-            append(
-              '<span class="term-err">cat: ' +
-                escapeHtml(name) +
-                ": No such file or directory</span>\nuse the full name: <span class=\"term-key\">cat " +
-                b +
-                "</span>",
-            );
-            return;
-          }
-          append(
-            '<span class="term-err">cat: ' +
-              escapeHtml(name) +
-              ": No such file or directory</span>",
-          );
-        }
-
-        /* measure how many monospace columns fit across the output area */
-        function termCols() {
-          var probe = document.createElement("span");
-          probe.style.cssText =
-            "position:absolute;visibility:hidden;white-space:pre;";
-          probe.textContent = "0123456789";
-          outEl.appendChild(probe);
-          var cw = probe.getBoundingClientRect().width / 10;
-          outEl.removeChild(probe);
-          return Math.max(16, Math.floor(outEl.clientWidth / (cw || 9)));
-        }
-
-        /* sl — the classic "you typo'd ls" steam locomotive, animated across */
-        function cmdSl() {
-          var TRAIN = [
-            "       .o                                _________",
-            "      . ______          ______________  |         |      _____",
-            "    _()_||__|| ________ |            |  |_________|   __||___||__",
-            "   (         | |      | |            |  |Y_____00_|  |_         _|",
-            "  /-OO----OO**=*OO--OO*=*OO--------OO*=*OO-------OO*=*OO-------OO*=P",
-            "",
-          ];
-          var w = 0;
-          TRAIN.forEach(function (l) {
-            if (l.length > w) w = l.length;
-          });
-          var el = append("");
-          el.style.whiteSpace = "pre";
-          el.style.overflow = "hidden";
-          function render(off) {
-            var pad = off > 0 ? new Array(off + 1).join(" ") : "";
-            var cut = off < 0 ? -off : 0;
-            el.textContent = TRAIN.map(function (l) {
-              return pad + l.slice(cut);
-            }).join("\n");
-          }
-          if (reduce) {
-            render(2);
-            return;
-          }
-          var off = termCols();
-          render(off);
-          var t = setInterval(function () {
-            if (!el.isConnected) {
-              clearInterval(t);
-              return;
-            }
-            off -= 2;
-            if (off <= -w) {
-              clearInterval(t);
-              if (el.parentNode) el.parentNode.removeChild(el);
-              return;
-            }
-            render(off);
-            termScroll();
-          }, 40);
-        }
-        // 1. Функция
-        function cmdSource(args) {
-             append("Redirecting to GitHub");
-             var dots = 0;
-             var interval = setInterval(function() {
-                       dots++;
-                       var last = document.querySelector(".term-out .term-block:last-child");
-                       if (last) last.innerHTML += ".";
-                       if (dots >= 3) {
-                            clearInterval(interval);
-                            setTimeout(function() {
-                                 window.open("https://github.com/laftiq/laptos_terminal.github.io", "_blank")
-                            }, 500);
-                       }
-             }, 500);
-        }
-
-        /* cowsay [text] —  cow says whatever you type */
-        function cmdCowsay(args) {
-          var text = args && args.length ? args.join(" ") : "mooo";
-          text = text.slice(0, 42);
-          var bar = new Array(text.length + 3).join("_");
-          var dash = new Array(text.length + 3).join("-");
-          var art =
-            " " +
-            bar +
-            "\n" +
-            "< " +
-            text +
-            " >\n" +
-            " " +
-            dash +
-            "\n" +
-            "        \\   ^__^\n" +
-            "         \\  (oo)\\_______\n" +
-            "            (__)\\       )\\/\\\n" +
-            "                ||----w |\n" +
-            "                ||     ||";
-          append(escapeHtml(art));
-        }
-
-        /* INLINE registry: word -> function. Add yours here, e.g.  foo: cmdFoo
-           (functions receive the args array, e.g. cd ["specs"], cowsay ["hi"]) */
-        var INLINE = {
-          help: cmdHelp,
-          whoami: cmdWhoami,
-          source: cmdSource,
-          ls: cmdLs,
-          cd: cmdCd,
-          cat: cmdCat,
-          clear: cmdClear,
-          sl: cmdSl,
-          cowsay: cmdCowsay,
-        };
-
-        /* ---------- run a typed/clicked command ----------
-     Resolution order (first match wins):
-       ALIASES -> PAGE_CMDS -> REDIRECTS -> home -> INLINE -> "not found".
-     `raw` is the whole input line; only the first word is used as the command
-     (extra words/args are ignored here — read them from clean.split if needed). */
-        function runCmd(raw) {
-          echo(raw); /* print "prompt + typed line" */
-          var trimmed = String(raw).trim();
-          if (trimmed) {
-            cmdHistory.push(trimmed);
-          } /* remember for ↑/↓ history */
-          histPos = cmdHistory.length;
-          draft = "";
-          if (!trimmed) return;
-
-          var clean = trimmed
-            .replace(/^[\/#:!>]+/, "")
-            .trim(); /* allow $/>/# prefixes */
-          var name = clean
-            .split(/\s+/)[0]
-            .toLowerCase(); /* first word, lowercased */
-          name = ALIASES[name] || name; /* resolve synonyms first */
-
-          if (PAGE_CMDS[name]) {
-            showView(name);
-            return;
-          } /* -> open its page  */
-          if (REDIRECTS[name]) {
-            window.open(REDIRECTS[name], "_blank", "noopener");
-            return;
-          } /* -> external URL */
-          if (name === "home") {
-            goHome();
-            return;
-          } /* -> back to terminal */
-          if (INLINE[name]) {
-            INLINE[name](clean.split(/\s+/).slice(1)); /* pass args: cd specs, cowsay hi */
-            termScroll();
-            return;
-          } /* -> print inline   */
-
-          /* nothing matched -> bash-style error */
-          append(
-            '<span class="term-err">' +
-              escapeHtml(clean.split(/\s+/)[0]) +
-              ": command not found</span>\n" +
-              'type <span class="term-key">help</span> for the list of commands',
-          );
-          termScroll();
-        }
-
-        /* ---------- input helpers ---------- */
-        function syncCaret() {
-          if (!fieldEl || !cmdInput) return;
-          if (document.activeElement === cmdInput || cmdInput.value.length) {
-            fieldEl.classList.add("typing");
-          } else {
-            fieldEl.classList.remove("typing");
-          }
-        }
-        function moveCaretEnd() {
-          try {
-            var n = cmdInput.value.length;
-            cmdInput.setSelectionRange(n, n);
-          } catch (e) {}
-        }
-        function clearInput() {
-          if (cmdInput) {
-            cmdInput.value = "";
-            syncCaret();
-          }
-        }
-        function focusCmd(force) {
-          if (!cmdInput) return;
-          if (!force && isCoarse) return;
-          if (document.activeElement === cmdInput) return;
-          if (cmdInput.offsetParent === null)
-            return; /* input hidden (phones) */
-          try {
-            cmdInput.focus({ preventScroll: true });
-          } catch (e) {
-            cmdInput.focus();
-          }
-        }
-
-        /* ---------- history (↑/↓) + tab autocomplete ---------- */
-        function historyPrev() {
-          if (!cmdHistory.length) return;
-          if (histPos === cmdHistory.length) {
-            draft = cmdInput.value;
-          }
-          if (histPos > 0) histPos--;
-          cmdInput.value = cmdHistory[histPos] || "";
-          syncCaret();
-          moveCaretEnd();
-        }
-        function historyNext() {
-          if (histPos >= cmdHistory.length) return;
-          histPos++;
-          cmdInput.value =
-            histPos === cmdHistory.length ? draft : cmdHistory[histPos];
-          syncCaret();
-          moveCaretEnd();
-        }
-        /* shared prefix of a list (case-insensitive; keeps 1st item's casing) */
-        function commonPrefix(arr) {
-          if (!arr.length) return "";
-          var p = arr[0];
-          for (var i = 1; i < arr.length; i++) {
-            while (p && arr[i].toLowerCase().indexOf(p.toLowerCase()) !== 0) {
-              p = p.slice(0, -1);
-            }
-          }
-          return p;
-        }
-
-        /* TAB autocomplete — completes the COMMAND word, or (after a space) the
-           ARGUMENT for commands that take one (cd / cat, see ARG_COMPLETIONS).
-           One match fills it in; several complete the shared prefix and list them. */
-        function autocomplete() {
-          var raw = cmdInput.value;
-          if (!raw.trim()) return; /* empty field -> Tab does nothing (no full list) */
-          var trailingSpace = /\s$/.test(raw);
-          var trimmed = raw.replace(/^\s+/, "");
-          var parts = trimmed.length ? trimmed.split(/\s+/) : [];
-          var completingArg =
-            parts.length > 1 || (parts.length === 1 && trailingSpace);
-
-          var candidates, frag, prefix;
-          if (!completingArg) {
-            /* completing the command word */
-            frag = (parts[0] || "").toLowerCase();
-            candidates = COMMAND_NAMES;
-            prefix = "";
-          } else {
-            /* completing the argument of a known command */
-            var cmd = (parts[0] || "").toLowerCase();
-            cmd = ALIASES[cmd] || cmd;
-            candidates = ARG_COMPLETIONS[cmd];
-            if (!candidates) return;
-            frag = trailingSpace
-              ? ""
-              : (parts[parts.length - 1] || "").toLowerCase();
-            prefix = parts[0] + " ";
-          }
-
-          var m = [];
-          for (var i = 0; i < candidates.length; i++) {
-            if (candidates[i].toLowerCase().indexOf(frag) === 0)
-              m.push(candidates[i]);
-          }
-          if (!m.length) return;
-
-          if (m.length === 1) {
-            /* unique: fill it (commands get a trailing space so you can type args) */
-            cmdInput.value = prefix + m[0] + (completingArg ? "" : " ");
-            syncCaret();
-            moveCaretEnd();
-            return;
-          }
-          /* several: extend to the shared prefix, then echo + list the options */
-          var common = commonPrefix(m);
-          if (common.length > frag.length) {
-            cmdInput.value = prefix + common;
-            syncCaret();
-            moveCaretEnd();
-          }
-          echo(raw.trim());
-          append(m.join("    "));
-        }
-
-        /* ---------- KEYBOARD ----------
-       on a PAGE: esc/backspace/enter -> back to terminal; any printable key
-                  returns to the terminal and starts the command.
-       on HOME : ↑/↓ history · tab autocomplete · enter run · esc clear ·
-                 ctrl+l clear screen · any printable key -> into the console */
-        function onKey(e) {
-          if (!inited) return;
-          var k = e.key;
-
-          if (e.ctrlKey || e.metaKey || e.altKey) {
-            if (
-              e.ctrlKey &&
-              (k === "l" || k === "L") &&
-              currentView === "home"
-            ) {
-              e.preventDefault();
-              cmdClear();
-            }
-            return;
-          }
-
-          if (currentView !== "home") {
-            if (
-              k === "Escape" ||
-              k === "Esc" ||
-              k === "Backspace" ||
-              k === "Enter"
-            ) {
-              e.preventDefault();
-              goHome();
-              return;
-            }
-            if (k && k.length === 1) {
-              goHome();
-              if (cmdInput && cmdInput.offsetParent !== null) {
-                e.preventDefault();
-                focusCmd(true);
-                cmdInput.value += k;
-                syncCaret();
-              }
-            }
-            return;
-          }
-
-          var atInput = document.activeElement === cmdInput;
-          if (k === "ArrowUp") {
-            if (atInput) {
-              e.preventDefault();
-              historyPrev();
-            }
-            return;
-          }
-          if (k === "ArrowDown") {
-            if (atInput) {
-              e.preventDefault();
-              historyNext();
-            }
-            return;
-          }
-          if (k === "Tab") {
-            if (atInput) {
-              e.preventDefault();
-              autocomplete();
-            }
-            return;
-          }
-          if (k === "Escape" || k === "Esc") {
-            clearInput();
-            return;
-          }
-          if (k === "Enter") {
-            return;
-          } /* form submit handles it */
-          if (k && k.length === 1 && !atInput) {
-            if (!cmdInput || cmdInput.offsetParent === null) return;
-            e.preventDefault();
-            focusCmd(true);
-            cmdInput.value += k;
-            syncCaret();
-          }
-        }
-
-        /* ---------- easter-egg reroll (delegated, works on the about page) ---------- */
-        function rerollEgg(w) {
-          var cur = w.textContent,
-            nw;
-          do {
-            nw = EGG[Math.floor(Math.random() * EGG.length)];
-          } while (nw === cur && EGG.length > 1);
-          w.textContent = nw;
-        }
-
-        /* ======================= INIT ======================= */
-        function initApp() {
-          if (inited) return;
-          inited = true;
-
-          outEl = document.getElementById("term-out");
-          cmdInput = document.getElementById("cmd");
-          fieldEl = document.getElementById("cmd-field");
-          isCoarse = !!(
-            window.matchMedia && window.matchMedia("(pointer: coarse)").matches
-          );
-
-          var form = document.getElementById("cmdline");
-          form.addEventListener("submit", function (e) {
-            e.preventDefault();
-            var v = cmdInput.value;
-            cmdInput.value = "";
-            syncCaret();
-            runCmd(v);
-            focusCmd();
-          });
-          cmdInput.addEventListener("focus", syncCaret);
-          cmdInput.addEventListener("blur", syncCaret);
-          cmdInput.addEventListener("input", syncCaret);
-
-          /* clicking the prompt LINE focuses the input (scoped here — no global
-       click-refocus, which used to break text selection / jump the caret) */
-          form.addEventListener("mousedown", function (e) {
-            if (e.target !== cmdInput) {
-              e.preventDefault();
-              focusCmd(true);
-            }
-          });
-
-          syncCaret(); /* set initial caret/width state */
-
-          /* module buttons run their command (open page / print inline) */
-          Array.prototype.forEach.call(
-            document.querySelectorAll(".ql"),
-            function (b) {
-              b.addEventListener("click", function () {
-                runCmd(b.getAttribute("data-cmd"));
-              });
-            },
-          );
-
-          /* back buttons on pages */
-          Array.prototype.forEach.call(
-            document.querySelectorAll("[data-home]"),
-            function (b) {
-              b.addEventListener("click", goHome);
-            },
-          );
-
-          /* easter-egg word (delegated on document so it works on the page).
-       NOTE: we deliberately do NOT refocus the console on arbitrary clicks —
-       that stole focus mid-click and made the caret jump / broke text
-       selection. Typing anywhere still refocuses it (see onKey). */
-          document.addEventListener(
-            "click",
-            function (e) {
-              var w =
-                e.target && e.target.closest
-                  ? e.target.closest(".egg-word")
-                  : null;
-              if (w) {
-                rerollEgg(w);
-              }
-            },
-            false,
-          );
-          document.addEventListener("keydown", function (e) {
-            if (e.key !== "Enter" && e.key !== " " && e.key !== "Spacebar")
-              return;
-            var w =
-              e.target && e.target.closest
-                ? e.target.closest(".egg-word")
-                : null;
-            if (w) {
-              e.preventDefault();
-              rerollEgg(w);
-            }
-          });
-
-          window.addEventListener("keydown", onKey, false);
-
-          focusCmd(); /* console ready to type on load (desktop) */
-
-          /* deep-link: #about / #specs ... opens that page (or runs an inline cmd) */
-          var hash = (location.hash || "").replace("#", "").toLowerCase();
-          if (hash) {
-            var hn = ALIASES[hash] || hash;
-            if (PAGE_CMDS[hn]) {
-              showView(hn);
-            } else if (INLINE[hn]) {
-              INLINE[hn]();
-            }
-          }
-        }
-      })();
-    </script>
-  </body>
-</html>
+╚══════╝╚═╝  ╚═╝╚═╝        ╚═╝    ╚═════╝ ╚══════╝</pre></div></section><section aria-label="PFP" class="panel avatar-panel"><div class="bar">laft</div><a aria-label="Telegram @laftik" class="avatar-slot" href="https://t.me/laftik" rel="noopener" target="_blank"><img alt="A cat wearing headphones and working at a desk" height="447" src="assets/avatar.png" width="447"/></a></section></div><article class="panel" id="bio"><div class="bar"><span id="section-title">About me</span></div><div class="hero bio-content" id="content"><h1>hey, i'm laptos.</h1><p class="bio-intro">i'm laptos (or laft). i'm not a developer or anything like that. just some random guy who's into linux, computers, photography, and messing around with that stuff for no particular reason.</p><p class="bio-intro">honestly, i have no idea why i made this website or what i'm supposed to put here. but i guess it's kinda cool to have smth like that so, yeah.</p><p class="bio-caption">A few things about me</p><dl class="bio-facts"><div><dt>bday</dt><dd>06.11.2026</dd></div><div><dt>cntry</dt><dd>russia</dd></div><div><dt>fav music</dt><dd>rap, breakcore, jazz</dd></div><div><dt>fav tv shows</dt><dd>young sheldon, breaking bad</dd></div><div><dt>hobbies</dt><dd>drums, guitar, homelabbing</dd></div><div><dt>fav games</dt><dd>dota, hollow knight</dd></div></dl></div></article><article class="panel" id="neofetch"><div class="bar"><span>Neofetch</span><div class="fetch-toolbar"><div aria-label="Select device" class="fetch-tabs" role="group"><button aria-pressed="true" data-host="pc" type="button">PC</button><button aria-pressed="false" data-host="homelab" type="button">HOMELAB</button></div></div></div><div class="fetch-body"><pre aria-hidden="true" id="fetch-logo"></pre><div class="fetch-info"><div class="fetch-user" id="fetch-user"></div><dl id="fetch-specs"></dl></div></div></article><article class="panel" id="gallery"><div class="bar"><span>Photos</span></div><div class="photos"><a aria-label="Open album: Teriberka" class="photo" href="albums/teriberka.html"><img alt="A winter road sign against snow-covered hills" class="album-cover" loading="lazy" src="assets/teriberka.png"/><small class="album-label">Teriberka</small></a><a aria-label="Open album: Street" class="photo" href="albums/street.html"><img alt="A passenger boarding a train" class="album-cover" loading="lazy" src="assets/street.png"/><small class="album-label">Street</small></a><a aria-label="Open album: Autumn" class="photo" href="albums/autumn.html"><img alt="An autumn crossroads in warm evening light" class="album-cover" loading="lazy" src="assets/autumn.png"/><small class="album-label">Autumn</small></a></div></article><details class="panel" id="setup" open=""><summary class="bar">Workspace</summary><div class="workspace-content"><div class="workspace-main"><figure class="workspace-photo"><img alt="A desk with a monitor, keyboard, boom-arm microphone, and PC" height="394" loading="lazy" src="assets/workspace.png" width="666"/><figcaption>My workspace</figcaption></figure><section aria-labelledby="peripherals-title" class="workspace-peripherals"><h2 id="peripherals-title">Devices</h2><dl><div><dt>Mouse</dt><dd>MCHOSE AX5 Pro</dd></div><div><dt>Keyboard</dt><dd>DP KD87A</dd></div><div><dt>Microphone</dt><dd>Fifine L669D</dd></div><div><dt>Audio interface</dt><dd>Arturia MiniFuse 1</dd></div></dl></section></div><section aria-labelledby="computer-title" class="workspace-computer"><h2 id="computer-title">Computer</h2><dl><div><dt>CPU</dt><dd>Ryzen 5 5600X</dd></div><div><dt>GPU</dt><dd>GeForce RTX 4070</dd></div><div><dt>RAM</dt><dd>16 GB</dd></div><div><dt>OS</dt><dd>Debian<br/>Windows</dd></div></dl></section></div></details></section></main></div><script>
+function updateClock(){const now=new Date();const zone={timeZone:'Europe/Moscow'};const el=document.getElementById('local-clock');el.textContent=new Intl.DateTimeFormat('en-GB',{...zone,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(now);el.dateTime=now.toISOString();}updateClock();setInterval(updateClock,1000);
+
+const profiles={pc:{user:'laptos@laptos',logo:"       _,met$$$$$gg.\n    ,g$$$$$$$$$$$$$$$P.\n  ,g$$P\"     \"\"\"Y$$.\".\n ,$$P'              `$$$.\n',$$P       ,ggs.     `$$b:\n`d$$'     ,$P\"'   .    $$$\n $$P      d$'     ,    $$P\n $$:      $$.   -    ,d$$'\n $$;      Y$b._   _,d$P'\n Y$$.    `.`\"Y$$$$P\"'\n `$$b      \"-.__\n  `Y$$\n   `Y$$.\n     `$$b.\n       `Y$$b.\n          `\"Y$b._\n              `\"\"\"",specs:[['system','Debian GNU/Linux 13 (trixie) x86_64'],['kernel','Linux 6.12.113+deb13-amd64'],['desktop','Openbox (X11)'],['terminal','kitty 0.41.1'],['shell','zsh 5.9'],['cpu','AMD Ryzen 5 5600X (12) @ 4.65 GHz'],['gpu','NVIDIA GeForce RTX 4070 [Discrete]'],['memory','15.53 GiB'],['disk','47.93 GiB']],note:''},homelab:{"user": "root@pve", "logo": "  .://:.            .://:.\n`hMMMMMMd/        /dMMMMMMh`\n `sMMMMMMMd:    :dMMMMMMMs`\n   /mMMMMMMMy..yMMMMMMMm/\n    .hMMMMMMMMMMMMMMh.\n      +NMMMMMMMMMMN+\n    .hMMMMMMMMMMMMMMh.\n   /mMMMMMMMy..yMMMMMMMm/\n `sMMMMMMMd:    :dMMMMMMMs`\n`hMMMMMMd/        /dMMMMMMh`\n  `://:`            `://:`", "specs": [["system", "Proxmox VE 9.1.2 x86_64"], ["kernel", "Linux 6.17.2-2-pve"], ["desktop", "—"], ["terminal", "termproxy"], ["shell", "bash 5.2.37"], ["cpu", "Intel Core i3-3220 (4) @ 3.30 GHz"], ["gpu", "Intel E3-1200 v2 / 3rd Gen Core graphics"], ["memory", "15.50 GiB"], ["disk", "93.93 GiB · ext4"]], "note": ""}};
+function setHost(host){const p=profiles[host];document.getElementById('fetch-logo').textContent=p.logo;document.getElementById('fetch-logo').dataset.host=host;document.getElementById('fetch-user').textContent=p.user;const dl=document.getElementById('fetch-specs');dl.replaceChildren();p.specs.forEach(([key,value])=>{const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=key;dd.textContent=value;dl.append(dt,dd)});document.querySelectorAll('[data-host]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.host===host)))}
+document.querySelectorAll('[data-host]').forEach(b=>b.addEventListener('click',()=>setHost(b.dataset.host)));setHost('pc');
+</script><script>
+// Public Last.fm read API. No account secret or session token is used.
+(()=>{
+const config={user:'lftq',key:'b6780b1559b26694bb16eeabe7ba7772'};
+const root=document.getElementById('listening');
+const title=root.querySelector('.listening-title');
+const artist=root.querySelector('.listening-artist');
+const status=root.querySelector('.listening-status');
+const cover=root.querySelector('.listening-cover');
+const link=document.createElement('a');
+link.href='https://www.last.fm/user/'+encodeURIComponent(config.user);
+link.target='_blank';link.rel='noopener noreferrer';link.className='listening-link';
+title.replaceWith(link);link.append(title);
+let running=false,hasTrack=false,lastPlayedAt=null,isNowPlaying=false,updateFailed=false;
+function renderListeningTime(){
+ if(!hasTrack||updateFailed)return;
+ if(isNowPlaying){status.textContent='Listening now';return;}
+ if(!lastPlayedAt){status.textContent='Last listened';return;}
+ const seconds=Math.max(0,Math.floor(Date.now()/1000-lastPlayedAt));
+ let relative;
+ if(seconds<60)relative='just now';
+ else if(seconds<3600){const n=Math.floor(seconds/60);relative=n+' min ago';}
+ else if(seconds<86400){const n=Math.floor(seconds/3600);relative=n+' '+(n===1?'hour':'hours')+' ago';}
+ else{const n=Math.floor(seconds/86400);relative=n+' '+(n===1?'day':'days')+' ago';}
+ status.textContent='Last listened · '+relative;
+ status.title=new Date(lastPlayedAt*1000).toLocaleString();
+}
+setInterval(renderListeningTime,15000);
+async function update(){
+ if(running)return;running=true;
+ try{
+ const url=new URL('https://ws.audioscrobbler.com/2.0/');
+ url.search=new URLSearchParams({method:'user.getRecentTracks',user:config.user,api_key:config.key,format:'json',limit:'1'});
+ const response=await fetch(url,{signal:AbortSignal.timeout(12000)});
+ if(!response.ok)throw new Error('HTTP '+response.status);
+ const data=await response.json();if(data.error)throw new Error('Last.fm '+data.error);
+ const tracks=data.recenttracks?.track;
+ const track=Array.isArray(tracks)?tracks[0]:tracks;
+ if(!track){title.textContent='Quiet for now';artist.textContent='No tracks yet';status.textContent='Nothing played yet';cover.replaceChildren();cover.textContent='♪';hasTrack=false;return;}
+ title.textContent=track.name;artist.textContent=track.artist?.['#text']||track.artist?.name||'';
+ const trackUrl=new URL(track.url||link.href);
+ if(trackUrl.protocol==='https:')link.href=trackUrl.href;
+ const now=track['@attr']?.nowplaying==='true';
+ isNowPlaying=now;lastPlayedAt=Number(track.date?.uts)||null;updateFailed=false;
+ status.removeAttribute('title');
+ const image=[...(track.image||[])].reverse().find(i=>i['#text']&&i['#text'].startsWith('https://'));
+ cover.replaceChildren();
+ if(image){const img=document.createElement('img');img.src=image['#text'];img.alt='';img.width=58;img.height=58;img.onerror=()=>{cover.replaceChildren();cover.textContent='♪';};cover.append(img);}else cover.textContent='♪';
+ hasTrack=true;renderListeningTime();
+ }catch(error){
+ updateFailed=true;
+ if(!hasTrack){title.textContent='Quiet for now';artist.textContent='Music status is unavailable';}
+ status.textContent=hasTrack?'Update unavailable':'Try again shortly';
+ }finally{running=false;}
+}
+update();setInterval(()=>{if(!document.hidden)update();},45000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)update();});
+})();
+</script><script defer src="/_vercel/insights/script.js"></script></body></html>
