@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install photo tools
+        run: python3 -m pip install -r scripts/photo-requirements.txt
       - name: Check importer
         run: python3 -m unittest discover -s tests -v
       - name: Import new photographs
@@ -26,9 +28,11 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_OWNER_ID: ${{ secrets.TELEGRAM_OWNER_ID }}
         run: python3 scripts/telegram-import.py
+      - name: Build lightweight previews and album metadata
+        run: python3 scripts/build-photo-previews.py
       - name: Publish imported photographs
         run: |
-          for path in assets/photos albums .telegram-import-state.json; do
+          for path in assets/photos assets/previews albums index.html .telegram-import-state.json; do
             if [ -e "$path" ]; then git add -- "$path"; fi
           done
           if ! git diff --cached --quiet; then

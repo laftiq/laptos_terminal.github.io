@@ -90,7 +90,7 @@ def import_photo(api, message, root):
     page = root / 'albums' / (album + '.html')
     markup = page.read_text()
     image_url = '../' + relative.as_posix()
-    if 'src="' + image_url + '"' in markup:
+    if 'src="' + image_url + '"' in markup or 'data-full="' + image_url + '"' in markup:
         return 'This photo is already in ' + album + '.'
     if '</article>' not in markup:
         raise BotError('Album page structure is invalid')

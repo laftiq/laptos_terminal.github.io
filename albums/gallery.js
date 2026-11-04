@@ -14,14 +14,14 @@
   function show(index) {
     current = (index + photos.length) % photos.length;
     const source = photos[current];
-    image.src = source.currentSrc || source.src;
+    image.src = source.dataset.full || source.currentSrc || source.src;
     image.alt = source.alt;
     caption.textContent = source.closest('figure').querySelector('figcaption')?.textContent || '';
     count.textContent = `${current + 1} / ${photos.length}`;
   }
   photos.forEach((photo, index) => {
     const link = document.createElement('a');
-    link.href = photo.src;
+    link.href = photo.dataset.full || photo.src;
     link.setAttribute('aria-label', `Enlarge photo ${index + 1}: ${photo.alt}`);
     photo.replaceWith(link);
     link.append(photo);
@@ -48,6 +48,23 @@
     const rect = viewer.getBoundingClientRect();
     if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) viewer.close();
   });
+  let gesture = null;
+  image.addEventListener('touchstart', event => {
+    gesture = event.touches.length === 1 ? {x: event.touches[0].clientX, y: event.touches[0].clientY, time: Date.now()} : null;
+  }, {passive: true});
+  image.addEventListener('touchmove', event => {
+    if (event.touches.length !== 1) gesture = null;
+  }, {passive: true});
+  image.addEventListener('touchcancel', () => { gesture = null; }, {passive: true});
+  image.addEventListener('touchend', event => {
+    if (!gesture || event.touches.length || !event.changedTouches.length) return;
+    const dx = event.changedTouches[0].clientX - gesture.x;
+    const dy = event.changedTouches[0].clientY - gesture.y;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.5 && Date.now() - gesture.time < 1000) {
+      show(current + (dx < 0 ? 1 : -1));
+    }
+    gesture = null;
+  }, {passive: true});
   viewer.addEventListener('close', () => {
     document.body.style.overflow = previousOverflow;
     image.removeAttribute('src');

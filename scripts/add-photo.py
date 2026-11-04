@@ -5,6 +5,8 @@ import html
 from pathlib import Path
 import re
 import shutil
+import subprocess
+import sys
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('album', choices=['street', 'autumn', 'teriberka'])
@@ -35,6 +37,7 @@ if args.caption:
     figure += '<figcaption>' + html.escape(args.caption) + '</figcaption>'
 figure += '</figure>'
 page.write_text(markup.replace('</article>', figure + '</article>', 1))
+subprocess.run([sys.executable, str(root / 'scripts/build-photo-previews.py')], check=True)
 print('Added:', destination.relative_to(root))
 print('Updated:', page.relative_to(root))
-print('Commit and push these changes to publish them.')
+print('Commit and push photos, previews, albums and index.html to publish them.')
