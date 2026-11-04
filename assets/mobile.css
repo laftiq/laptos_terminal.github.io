@@ -47,3 +47,5 @@ html body>.shell>.panel>figure{padding:0 12px 20px}
 html body>.shell>.panel>figure img{width:100%;height:auto;max-height:none}
 html body>.shell>.panel>figure figcaption{font-size:10px;margin-top:8px}
 }
+
+@media(max-width:700px){html body .shell main .panel>.bar,html body .shell main .panel>.bar>span,html body .shell main .identity-row .panel>.bar,html body .shell main #setup>summary.bar{font-family:'Laptos Mono',monospace!important}}
